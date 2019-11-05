@@ -1,3 +1,5 @@
+![Travis Build Status](https://travis-ci.org/MighTguY/customized-symspell.svg?branch=master)
+
 # Customized SymSpell SpellCheck Java 
 **This custmoized spell check is is based on the spell correction fuzzy search library [SymSpell](https://github.com/wolfgarbe/symspell) with a few customizations and optimizations**  
 
