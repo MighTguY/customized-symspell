@@ -24,6 +24,10 @@
 we used the adjancey graph of the keyboard for the weights to the connected nodes.
 <img src="qwerty.png" align="center">
 
+## Generation of Deletes
+
+Word deletes are generated with taking edit distance which is minimum of max edit distance and 0.3 * word.length
+  
   
 ## Built With
 
