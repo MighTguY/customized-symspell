@@ -5,9 +5,16 @@ before_install:
 - sed -e "s/^\\(127\\.0\\.0\\.1.*\\)/\\1 $(hostname | cut -c1-63)/" /etc/hosts | sudo tee /etc/hosts
 - cat /etc/hosts # optionally check the content *after*
 
+env:
+  global:
+  - CODECOV_TOKEN="a7e80b40-89ed-4d53-b595-dc147229e68f"
+
 language: java
 jdk:
 - openjdk8
 branches:
   only:
   - master
+
+after_success:
+- bash <(curl -s https://codecov.io/bash) -t uuid-repo-token
