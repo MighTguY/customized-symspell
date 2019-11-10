@@ -28,6 +28,7 @@ we used the adjancey graph of the keyboard for the weights to the connected node
 
 Word deletes are generated with taking edit distance which is minimum of max edit distance and 0.3 * word.length
   
+## [Usage](symspell-lib/README.md)
   
 ## Built With
 
