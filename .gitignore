@@ -1,5 +1,4 @@
-*/target/**
-target/*
+
 .idea
 *.iml
 */.classpath
@@ -90,7 +89,6 @@ $RECYCLE.BIN/
 *.msp
 # Windows shortcuts
 *.lnk
-target/
 pom.xml.tag
 pom.xml.releaseBackup
 pom.xml.versionsBackup
@@ -131,7 +129,7 @@ nb-configuration.xml
 
 .DS_Store
 classes/
-**/target/
+
 /.nb-gradle/
 logs/
 service.log
