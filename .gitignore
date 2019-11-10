@@ -1,4 +1,4 @@
-
+target/
 .idea
 *.iml
 */.classpath
@@ -8,7 +8,7 @@
 .project
 .settings
 .DS_Store
-
+**/target/
 generated
 
 *.class
