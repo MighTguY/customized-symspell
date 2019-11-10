@@ -17,4 +17,4 @@ branches:
   - master
 
 after_success:
-- bash <(curl -s https://codecov.io/bash) -t uuid-repo-token
+- bash <(curl -s https://codecov.io/bash) -t "a7e80b40-89ed-4d53-b595-dc147229e68f"

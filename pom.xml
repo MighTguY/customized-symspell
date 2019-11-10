@@ -7,10 +7,12 @@
   <groupId>com.lsharma.spellcheck.symspell</groupId>
   <artifactId>symspell-java</artifactId>
   <version>6.6-SNAPSHOT</version>
+  <packaging>pom</packaging>
 
 
   <name>${project.artifactId}</name>
   <description>Customized version of Symspell, Java port of the version 6.6</description>
+
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -28,12 +30,11 @@
     <apache.commons.version>4.1</apache.commons.version>
     <jacoco.unittests.destFile>${project.build.directory}/coverage-reports/jacoco.exec
     </jacoco.unittests.destFile>
-    <jacoco.unittests.reportPath>${project.build.directory}/coverage-reports/unit-tests
-    </jacoco.unittests.reportPath>
+    <jacoco.unittests.reportPath>${project.build.directory}/coverage-reports/unit-tests</jacoco.unittests.reportPath>
     <maven.surefire.plugin.version>2.20.1</maven.surefire.plugin.version>
     <skip.unit.tests>false</skip.unit.tests>
-    <coverage.threshold>0.0</coverage.threshold> <!-- //TODO: update to 75%-->
-    <sonar.jacoco.reportPath>${jacoco.unittests.destFile</sonar.jacoco.reportPath>
+    <coverage.threshold>75.0</coverage.threshold> <!-- //TODO: update to 75%-->
+    <sonar.jacoco.reportPath>${jacoco.unittests.destFile}</sonar.jacoco.reportPath>
     <sonar-jacoco-listeners.version>3.2</sonar-jacoco-listeners.version>
     <lombok.version>1.18.2</lombok.version>
     <maven-javadoc-plugin.version>2.10.1</maven-javadoc-plugin.version>
@@ -48,7 +49,7 @@
     <sonar.tests>src/test/java</sonar.tests>
   </properties>
 
-
+  <dependencyManagement>
   <dependencies>
     <dependency>
       <groupId>com.sangupta</groupId>
@@ -80,8 +81,8 @@
       <artifactId>slf4j-api</artifactId>
       <version>1.7.25</version>
     </dependency>
-
   </dependencies>
+  </dependencyManagement>
 
   <build>
     <plugins>
@@ -281,5 +282,10 @@
       </dependencies>
     </profile>
   </profiles>
+
+  <modules>
+    <module>symspell-lib</module>
+    <module>symspell-demo</module>
+  </modules>
 
 </project>
