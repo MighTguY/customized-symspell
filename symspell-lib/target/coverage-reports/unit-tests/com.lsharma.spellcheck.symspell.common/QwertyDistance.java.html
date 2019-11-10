@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>QwertyDistance.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">symspell-lib</a> &gt; <a href="index.source.html" class="el_package">com.lsharma.spellcheck.symspell.common</a> &gt; <span class="el_source">QwertyDistance.java</span></div><h1>QwertyDistance.java</h1><pre class="source lang-java linenums">
+package com.lsharma.spellcheck.symspell.common;
+
+import com.lsharma.spellcheck.symspell.api.CharDistance;
+import java.util.Arrays;
+import lombok.extern.slf4j.Slf4j;
+
+/**
+ * Qwerty distance to get the distance between two chars, the default distance is 1.5f It uses 0.1
+ * for direct connect and 0.4f for the diagonal connect. Adjacency matrix of the Qwerty is computed
+ * using
+ * &lt;a href=&quot;http://www.nada.kth.se/~ann/exjobb/axel_samuelsson.pdf&quot;&gt;Qwerty Adjacency Map&lt;/a&gt;
+ */
+<span class="fc" id="L14">@Slf4j</span>
+public class QwertyDistance implements CharDistance {
+
+<span class="fc" id="L17">  double directConnect = 0.1f;</span>
+<span class="fc" id="L18">  double diagonalConnect = 0.4f;</span>
+<span class="fc" id="L19">  double defaultValue = 1f;</span>
+
+<span class="fc" id="L21">  double[][] operationCost = new double['z' + 1]['z' + 1];</span>
+
+<span class="fc" id="L23">  public QwertyDistance() {</span>
+<span class="fc" id="L24">    this.initializeCostMatrix();</span>
+<span class="fc" id="L25">  }</span>
+
+  @Override
+  public double distance(char a, char b) {
+
+<span class="pc bpc" id="L30" title="2 of 4 branches missed.">    if (a &gt; 'z' + 1 || b &gt; 'z' + 1) {</span>
+<span class="nc" id="L31">      return defaultValue;</span>
+    }
+<span class="fc" id="L33">    return this.operationCost[a][b];</span>
+  }
+
+  public void initializeCostMatrix() {
+<span class="fc bfc" id="L37" title="All 2 branches covered.">    for (double[] row : this.operationCost) {</span>
+<span class="fc" id="L38">      Arrays.fill(row, defaultValue);</span>
+    }
+
+<span class="fc bfc" id="L41" title="All 2 branches covered.">    for (int i = 'a'; i &lt;= 'z'; i++) {</span>
+<span class="fc bfc" id="L42" title="All 2 branches covered.">      for (int j = 'a'; j &lt;= 'z'; j++) {</span>
+<span class="fc bfc" id="L43" title="All 2 branches covered.">        if (i == j) {</span>
+<span class="fc" id="L44">          this.operationCost[i][j] = 0;</span>
+        }
+      }
+    }
+
+<span class="fc" id="L49">    this.operationCost['a']['s'] = directConnect;</span>
+<span class="fc" id="L50">    this.operationCost['a']['w'] = diagonalConnect;</span>
+<span class="fc" id="L51">    this.operationCost['a']['q'] = diagonalConnect;</span>
+<span class="fc" id="L52">    this.operationCost['a']['z'] = diagonalConnect;</span>
+
+<span class="fc" id="L54">    this.operationCost['s']['a'] = directConnect;</span>
+<span class="fc" id="L55">    this.operationCost['s']['d'] = directConnect;</span>
+<span class="fc" id="L56">    this.operationCost['s']['w'] = diagonalConnect;</span>
+<span class="fc" id="L57">    this.operationCost['s']['e'] = diagonalConnect;</span>
+<span class="fc" id="L58">    this.operationCost['s']['x'] = diagonalConnect;</span>
+<span class="fc" id="L59">    this.operationCost['s']['z'] = diagonalConnect;</span>
+
+<span class="fc" id="L61">    this.operationCost['d']['s'] = directConnect;</span>
+<span class="fc" id="L62">    this.operationCost['d']['f'] = directConnect;</span>
+<span class="fc" id="L63">    this.operationCost['d']['e'] = diagonalConnect;</span>
+<span class="fc" id="L64">    this.operationCost['d']['r'] = diagonalConnect;</span>
+<span class="fc" id="L65">    this.operationCost['d']['c'] = diagonalConnect;</span>
+<span class="fc" id="L66">    this.operationCost['d']['x'] = diagonalConnect;</span>
+
+<span class="fc" id="L68">    this.operationCost['f']['d'] = directConnect;</span>
+<span class="fc" id="L69">    this.operationCost['f']['g'] = directConnect;</span>
+<span class="fc" id="L70">    this.operationCost['f']['r'] = diagonalConnect;</span>
+<span class="fc" id="L71">    this.operationCost['f']['t'] = diagonalConnect;</span>
+<span class="fc" id="L72">    this.operationCost['f']['c'] = diagonalConnect;</span>
+<span class="fc" id="L73">    this.operationCost['f']['v'] = diagonalConnect;</span>
+
+<span class="fc" id="L75">    this.operationCost['g']['f'] = directConnect;</span>
+<span class="fc" id="L76">    this.operationCost['g']['h'] = directConnect;</span>
+<span class="fc" id="L77">    this.operationCost['g']['t'] = diagonalConnect;</span>
+<span class="fc" id="L78">    this.operationCost['g']['y'] = diagonalConnect;</span>
+<span class="fc" id="L79">    this.operationCost['g']['v'] = diagonalConnect;</span>
+<span class="fc" id="L80">    this.operationCost['g']['b'] = diagonalConnect;</span>
+
+<span class="fc" id="L82">    this.operationCost['h']['g'] = directConnect;</span>
+<span class="fc" id="L83">    this.operationCost['h']['j'] = directConnect;</span>
+<span class="fc" id="L84">    this.operationCost['h']['y'] = diagonalConnect;</span>
+<span class="fc" id="L85">    this.operationCost['h']['u'] = diagonalConnect;</span>
+<span class="fc" id="L86">    this.operationCost['h']['b'] = diagonalConnect;</span>
+<span class="fc" id="L87">    this.operationCost['h']['n'] = diagonalConnect;</span>
+
+<span class="fc" id="L89">    this.operationCost['j']['h'] = directConnect;</span>
+<span class="fc" id="L90">    this.operationCost['j']['k'] = directConnect;</span>
+<span class="fc" id="L91">    this.operationCost['j']['u'] = diagonalConnect;</span>
+<span class="fc" id="L92">    this.operationCost['j']['i'] = diagonalConnect;</span>
+<span class="fc" id="L93">    this.operationCost['j']['n'] = diagonalConnect;</span>
+<span class="fc" id="L94">    this.operationCost['j']['m'] = diagonalConnect;</span>
+
+<span class="fc" id="L96">    this.operationCost['k']['j'] = directConnect;</span>
+<span class="fc" id="L97">    this.operationCost['k']['l'] = directConnect;</span>
+<span class="fc" id="L98">    this.operationCost['k']['i'] = diagonalConnect;</span>
+<span class="fc" id="L99">    this.operationCost['k']['o'] = diagonalConnect;</span>
+<span class="fc" id="L100">    this.operationCost['k']['m'] = diagonalConnect;</span>
+
+<span class="fc" id="L102">    this.operationCost['l']['k'] = directConnect;</span>
+<span class="fc" id="L103">    this.operationCost['l']['o'] = diagonalConnect;</span>
+<span class="fc" id="L104">    this.operationCost['l']['p'] = diagonalConnect;</span>
+
+<span class="fc" id="L106">    this.operationCost['q']['w'] = directConnect;</span>
+<span class="fc" id="L107">    this.operationCost['q']['a'] = diagonalConnect;</span>
+
+<span class="fc" id="L109">    this.operationCost['w']['q'] = directConnect;</span>
+<span class="fc" id="L110">    this.operationCost['w']['e'] = directConnect;</span>
+<span class="fc" id="L111">    this.operationCost['w']['a'] = diagonalConnect;</span>
+<span class="fc" id="L112">    this.operationCost['w']['s'] = diagonalConnect;</span>
+
+<span class="fc" id="L114">    this.operationCost['e']['w'] = directConnect;</span>
+<span class="fc" id="L115">    this.operationCost['e']['r'] = directConnect;</span>
+<span class="fc" id="L116">    this.operationCost['e']['s'] = diagonalConnect;</span>
+<span class="fc" id="L117">    this.operationCost['e']['d'] = diagonalConnect;</span>
+
+<span class="fc" id="L119">    this.operationCost['r']['e'] = directConnect;</span>
+<span class="fc" id="L120">    this.operationCost['r']['t'] = directConnect;</span>
+<span class="fc" id="L121">    this.operationCost['r']['d'] = diagonalConnect;</span>
+<span class="fc" id="L122">    this.operationCost['r']['f'] = diagonalConnect;</span>
+
+<span class="fc" id="L124">    this.operationCost['t']['r'] = directConnect;</span>
+<span class="fc" id="L125">    this.operationCost['t']['y'] = directConnect;</span>
+<span class="fc" id="L126">    this.operationCost['t']['f'] = diagonalConnect;</span>
+<span class="fc" id="L127">    this.operationCost['t']['g'] = diagonalConnect;</span>
+
+<span class="fc" id="L129">    this.operationCost['y']['t'] = directConnect;</span>
+<span class="fc" id="L130">    this.operationCost['y']['u'] = directConnect;</span>
+<span class="fc" id="L131">    this.operationCost['y']['g'] = diagonalConnect;</span>
+<span class="fc" id="L132">    this.operationCost['y']['h'] = diagonalConnect;</span>
+
+<span class="fc" id="L134">    this.operationCost['u']['y'] = directConnect;</span>
+<span class="fc" id="L135">    this.operationCost['u']['i'] = directConnect;</span>
+<span class="fc" id="L136">    this.operationCost['u']['h'] = diagonalConnect;</span>
+<span class="fc" id="L137">    this.operationCost['u']['j'] = diagonalConnect;</span>
+
+<span class="fc" id="L139">    this.operationCost['i']['u'] = directConnect;</span>
+<span class="fc" id="L140">    this.operationCost['i']['o'] = directConnect;</span>
+<span class="fc" id="L141">    this.operationCost['i']['j'] = diagonalConnect;</span>
+<span class="fc" id="L142">    this.operationCost['i']['k'] = diagonalConnect;</span>
+
+<span class="fc" id="L144">    this.operationCost['o']['i'] = directConnect;</span>
+<span class="fc" id="L145">    this.operationCost['o']['p'] = directConnect;</span>
+<span class="fc" id="L146">    this.operationCost['o']['k'] = diagonalConnect;</span>
+<span class="fc" id="L147">    this.operationCost['o']['l'] = diagonalConnect;</span>
+
+<span class="fc" id="L149">    this.operationCost['p']['o'] = directConnect;</span>
+<span class="fc" id="L150">    this.operationCost['p']['l'] = diagonalConnect;</span>
+
+<span class="fc" id="L152">    this.operationCost['z']['x'] = directConnect;</span>
+<span class="fc" id="L153">    this.operationCost['z']['s'] = diagonalConnect;</span>
+<span class="fc" id="L154">    this.operationCost['z']['a'] = diagonalConnect;</span>
+
+<span class="fc" id="L156">    this.operationCost['x']['z'] = directConnect;</span>
+<span class="fc" id="L157">    this.operationCost['x']['c'] = directConnect;</span>
+<span class="fc" id="L158">    this.operationCost['x']['s'] = diagonalConnect;</span>
+<span class="fc" id="L159">    this.operationCost['x']['d'] = diagonalConnect;</span>
+
+<span class="fc" id="L161">    this.operationCost['c']['x'] = directConnect;</span>
+<span class="fc" id="L162">    this.operationCost['c']['v'] = directConnect;</span>
+<span class="fc" id="L163">    this.operationCost['c']['d'] = diagonalConnect;</span>
+<span class="fc" id="L164">    this.operationCost['c']['f'] = diagonalConnect;</span>
+
+<span class="fc" id="L166">    this.operationCost['v']['b'] = directConnect;</span>
+<span class="fc" id="L167">    this.operationCost['v']['c'] = directConnect;</span>
+<span class="fc" id="L168">    this.operationCost['v']['f'] = diagonalConnect;</span>
+<span class="fc" id="L169">    this.operationCost['v']['g'] = diagonalConnect;</span>
+
+<span class="fc" id="L171">    this.operationCost['b']['v'] = directConnect;</span>
+<span class="fc" id="L172">    this.operationCost['b']['n'] = directConnect;</span>
+<span class="fc" id="L173">    this.operationCost['b']['g'] = diagonalConnect;</span>
+<span class="fc" id="L174">    this.operationCost['b']['h'] = diagonalConnect;</span>
+
+<span class="fc" id="L176">    this.operationCost['n']['b'] = directConnect;</span>
+<span class="fc" id="L177">    this.operationCost['n']['m'] = directConnect;</span>
+<span class="fc" id="L178">    this.operationCost['n']['h'] = diagonalConnect;</span>
+<span class="fc" id="L179">    this.operationCost['n']['j'] = diagonalConnect;</span>
+
+<span class="fc" id="L181">    this.operationCost['m']['n'] = directConnect;</span>
+<span class="fc" id="L182">    this.operationCost['m']['j'] = diagonalConnect;</span>
+<span class="fc" id="L183">    this.operationCost['m']['k'] = diagonalConnect;</span>
+<span class="fc" id="L184">  }</span>
+
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.8.201612092310</span></div></body></html>

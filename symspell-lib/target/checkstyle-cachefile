@@ -1,0 +1,20 @@
+#Sun Nov 10 22:25:06 IST 2019
+/Users/l0s01zl/Dev/Project/symspell-java-port/symspell-lib/src/main/java/com/lsharma/spellcheck/symspell/common/SpellHelper.java=1572936092000
+/Users/l0s01zl/Dev/Project/symspell-java-port/symspell-lib/src/main/java/com/lsharma/spellcheck/symspell/api/HashFunction.java=1572936092000
+/Users/l0s01zl/Dev/Project/symspell-java-port/symspell-lib/src/main/java/com/lsharma/spellcheck/symspell/api/StringDistance.java=1572936092000
+/Users/l0s01zl/Dev/Project/symspell-java-port/symspell-lib/src/main/java/com/lsharma/spellcheck/symspell/api/DataHolder.java=1572936092000
+/Users/l0s01zl/Dev/Project/symspell-java-port/symspell-lib/src/main/java/com/lsharma/spellcheck/symspell/common/SpellCheckSettings.java=1572936092000
+/Users/l0s01zl/Dev/Project/symspell-java-port/symspell-lib/src/main/java/com/lsharma/spellcheck/symspell/common/WeightedDamerauLevenshteinDistance.java=1572936092000
+/Users/l0s01zl/Dev/Project/symspell-java-port/symspell-lib/src/main/java/com/lsharma/spellcheck/symspell/impl/InMemoryDataHolder.java=1572936092000
+/Users/l0s01zl/Dev/Project/symspell-java-port/symspell-lib/src/main/java/com/lsharma/spellcheck/symspell/common/QwertyDistance.java=1572936092000
+/Users/l0s01zl/Dev/Project/symspell-java-port/symspell-lib/src/main/java/com/lsharma/spellcheck/symspell/exception/SpellCheckExceptionCode.java=1572936092000
+/Users/l0s01zl/Dev/Project/symspell-java-port/symspell-lib/src/main/java/com/lsharma/spellcheck/symspell/common/Murmur3HashFunction.java=1572936092000
+/Users/l0s01zl/Dev/Project/symspell-java-port/symspell-lib/src/main/java/com/lsharma/spellcheck/symspell/common/Composition.java=1572936092000
+/Users/l0s01zl/Dev/Project/symspell-java-port/symspell-lib/src/main/java/com/lsharma/spellcheck/symspell/common/DictionaryItem.java=1572936092000
+/Users/l0s01zl/Dev/Project/symspell-java-port/symspell-lib/src/main/java/com/lsharma/spellcheck/symspell/api/CharDistance.java=1572936092000
+/Users/l0s01zl/Dev/Project/symspell-java-port/symspell-lib/src/main/java/com/lsharma/spellcheck/symspell/exception/SpellCheckException.java=1572936092000
+configuration*?=E2AB7056F5F902B9D04FB361E011A44EA6B4037E
+/Users/l0s01zl/Dev/Project/symspell-java-port/symspell-lib/src/main/java/com/lsharma/spellcheck/symspell/impl/SymSpellCheck.java=1572936092000
+/Users/l0s01zl/Dev/Project/symspell-java-port/symspell-lib/src/main/java/com/lsharma/spellcheck/symspell/api/SpellChecker.java=1572936092000
+/Users/l0s01zl/Dev/Project/symspell-java-port/symspell-lib/src/main/java/com/lsharma/spellcheck/symspell/common/SuggestionItem.java=1572936092000
+/Users/l0s01zl/Dev/Project/symspell-java-port/symspell-lib/src/main/java/com/lsharma/spellcheck/symspell/common/Verbosity.java=1572936092000

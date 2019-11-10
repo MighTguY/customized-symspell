@@ -1,0 +1,7 @@
+com/lsharma/spellcheck/symspell/SymSpellTest.class
+com/lsharma/spellcheck/symspell/MiscUnitTest.class
+com/lsharma/spellcheck/symspell/TestInMemoryDataHolder.class
+com/lsharma/spellcheck/symspell/TestDataHolder.class
+com/lsharma/spellcheck/symspell/SymSpellTestCustomized.class
+com/lsharma/spellcheck/symspell/SymSpellTestWeighted.class
+com/lsharma/spellcheck/symspell/TestedWDamerauLevenshtein.class
