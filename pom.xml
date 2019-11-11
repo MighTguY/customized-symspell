@@ -4,14 +4,15 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.lsharma.spellcheck.symspell</groupId>
-  <artifactId>symspell-java</artifactId>
+  <groupId>io.github.mightguy</groupId>
+  <artifactId>symspell</artifactId>
   <version>6.6-SNAPSHOT</version>
   <packaging>pom</packaging>
 
 
   <name>${project.artifactId}</name>
   <description>Customized version of Symspell, Java port of the version 6.6</description>
+  <url>https://github.com/MighTguY/customized-symspell</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -232,6 +233,44 @@
         <artifactId>sonar-maven-plugin</artifactId>
         <version>${sonar-maven-plugin.version}</version>
       </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>2.2.1</version>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <goals>
+              <goal>jar-no-fork</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-gpg-plugin</artifactId>
+        <version>1.5</version>
+        <executions>
+          <execution>
+            <id>sign-artifacts</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>sign</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.sonatype.plugins</groupId>
+        <artifactId>nexus-staging-maven-plugin</artifactId>
+        <version>1.6.7</version>
+        <extensions>true</extensions>
+        <configuration>
+          <serverId>ossrh</serverId>
+          <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+          <autoReleaseAfterClose>true</autoReleaseAfterClose>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
 
@@ -283,9 +322,43 @@
     </profile>
   </profiles>
 
+
+  <scm>
+    <connection>scm:git:git://github.com/mightguy/customized-symspell.git</connection>
+    <developerConnection>scm:git:ssh://github.com/mightguy/customized-symspell.git</developerConnection>
+    <url>https://github.com/mightguy/customized-symspell/tree/master</url>
+  </scm>
+
+
+  <licenses>
+    <license>
+      <name>MIT License</name>
+      <url>http://www.opensource.org/licenses/mit-license.php</url>
+    </license>
+  </licenses>
+
+  <developers>
+    <developer>
+      <name>Lucky Sharma</name>
+      <email>iamluckysharma.0910@gmail.com</email>
+      <organization>io.github.mightguy</organization>
+      <organizationUrl>https://github.com/mightguy/customized-symspell</organizationUrl>
+    </developer>
+  </developers>
+
+  <distributionManagement>
+    <snapshotRepository>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+    </snapshotRepository>
+    <repository>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+    </repository>
+  </distributionManagement>
+
   <modules>
     <module>symspell-lib</module>
-    <module>symspell-demo</module>
   </modules>
 
 </project>

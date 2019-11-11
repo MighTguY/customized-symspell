@@ -25,6 +25,22 @@
 we used the adjancey graph of the keyboard for the weights to the connected nodes.
 <img src="qwerty.png" align="center">
 
+### Example
+```
+For 2 terms: 
+        slices  
+        olives
+
+If the misspelled word is, slives 
+both slices and olives is 1 edit distnace, 
+  so in default case the one with higher frequency will end up in the result.
+While with the qwerty based char distance,
+ slives is more closer to slices.
+
+The reason for this is in Qwerty Based Keyboard, 
+ S and O are too far while V and C are adjacent.
+```
+
 ## Generation of Deletes
 
 Word deletes are generated with taking edit distance which is minimum of max edit distance and 0.3 * word.length

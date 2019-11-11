@@ -4,8 +4,8 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
   <parent>
-    <groupId>com.lsharma.spellcheck.symspell</groupId>
-    <artifactId>symspell-java</artifactId>
+    <groupId>io.github.mightguy</groupId>
+    <artifactId>symspell</artifactId>
     <version>6.6-SNAPSHOT</version>
   </parent>
 
