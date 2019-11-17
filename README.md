@@ -1,5 +1,7 @@
 ![Travis Build Status](https://travis-ci.org/MighTguY/customized-symspell.svg?branch=master)
 [![codecov](https://codecov.io/gh/MighTguY/customized-symspell/branch/master/graph/badge.svg)](https://codecov.io/gh/MighTguY/customized-symspell)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://raw.githubusercontent.com/MighTguY/customized-symspell/master/LICENSE)
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.mightguy/symspell-lib.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.mightguy%22%20AND%20a:%22symspell-lib%22)
 
 # Customized SymSpell SpellCheck Java 
 **This custmoized spell check is is based on the spell correction fuzzy search library [SymSpell](https://github.com/wolfgarbe/symspell) with a few customizations and optimizations**  
@@ -55,6 +57,9 @@ Word deletes are generated with taking edit distance which is minimum of max edi
 ## Versioning
 
 We use [SemVer](http://semver.org/) for versioning. 
+
+## Nexus
+* [Link to Nexus-Releases](https://oss.sonatype.org/service/local/repositories/releases/content/io/github/mightguy/symspell-lib/)
 
 ## Licenese
 
