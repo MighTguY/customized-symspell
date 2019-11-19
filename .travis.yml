@@ -21,6 +21,14 @@ jobs:
 
     before_install:
     - echo "Build Started for Master"
+    - export GPG_TTY=$(tty)
+    - echo $GPG_SECRET_KEYS | base64 --decode | $GPG_EXECUTABLE --import
+    - echo $GPG_OWNERTRUST | base64 --decode | $GPG_EXECUTABLE --import-ownertrust
+    - cat /etc/hosts
+    - sudo hostname "$(hostname | cut -c1-63)"
+    - sed -e "s/^\\(127\\.0\\.0\\.1.*\\)/\\1 $(hostname | cut -c1-63)/" /etc/hosts | sudo
+      tee /etc/hosts
+    - cat /etc/hosts
     - mvn help:evaluate -N -Dexpression=project.version|grep -v '\[' |  cut -d'-' -f 1  |cut -d'.' -f1-2
     - export project_version=$(mvn help:evaluate -N -Dexpression=project.version|grep -v '\[' | cut -d'-' -f 1 | cut -d'.' -f1-2)
     - git config --local user.name "travis-ci"
@@ -61,6 +69,14 @@ jobs:
     if: branch = develop
     before_install:
       - echo "Build Started for Develop"
+      - export GPG_TTY=$(tty)
+      - echo $GPG_SECRET_KEYS | base64 --decode | $GPG_EXECUTABLE --import
+      - echo $GPG_OWNERTRUST | base64 --decode | $GPG_EXECUTABLE --import-ownertrust
+      - cat /etc/hosts
+      - sudo hostname "$(hostname | cut -c1-63)"
+      - sed -e "s/^\\(127\\.0\\.0\\.1.*\\)/\\1 $(hostname | cut -c1-63)/" /etc/hosts | sudo
+        tee /etc/hosts
+      - cat /etc/hosts
     install:
       - mvn --settings .maven.xml install -Dgpg.skip  -B -V
     after_success:

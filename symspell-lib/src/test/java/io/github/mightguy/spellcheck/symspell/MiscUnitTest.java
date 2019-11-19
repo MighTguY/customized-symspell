@@ -92,7 +92,7 @@ public class MiscUnitTest {
     List<SuggestionItem> suggestionItems1 = SpellHelper.earlyExit(suggestionItems, "term", 2.0);
 
     Assert.assertNotNull(suggestionItems1);
-    Assert.assertEquals(0, suggestionItems1.size());
+    Assert.assertEquals(1, suggestionItems1.size());
   }
 
   @Test
