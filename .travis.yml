@@ -17,7 +17,7 @@ cache:
 jobs:
   include:
   - stage: build_master
-    if: branch = master
+    if: branch = master NOT type = pull_request
 
     before_install:
     - echo "Build Started for Master"
@@ -66,7 +66,7 @@ jobs:
       - sh .travis/push.sh
 
   - stage: build_develop
-    if: branch = develop
+    if: branch = develop NOT type = pull_request
     before_install:
       - echo "Build Started for Develop"
       - export GPG_TTY=$(tty)
@@ -81,5 +81,21 @@ jobs:
       - mvn --settings .maven.xml install -Dgpg.skip  -B -V
     after_success:
       - bash <(curl -s https://codecov.io/bash) -t "a7e80b40-89ed-4d53-b595-dc147229e68f"
+
+  - stage: build_pr
+    if: type = pull_request
+    before_install:
+    - echo "Build Started for PR $TRAVIS_PULL_REQUEST"
+    - export GPG_TTY=$(tty)
+    - echo $GPG_SECRET_KEYS | base64 --decode | $GPG_EXECUTABLE --import
+    - echo $GPG_OWNERTRUST | base64 --decode | $GPG_EXECUTABLE --import-ownertrust
+    - cat /etc/hosts
+    - sudo hostname "$(hostname | cut -c1-63)"
+    - sed -e "s/^\\(127\\.0\\.0\\.1.*\\)/\\1 $(hostname | cut -c1-63)/" /etc/hosts | sudo
+      tee /etc/hosts
+    - cat /etc/hosts
+    install:
+    - mvn --settings .maven.xml install -Dgpg.skip  -B -V
+
 
 
