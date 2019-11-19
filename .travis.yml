@@ -1,28 +1,3 @@
-before_install:
-- export GPG_TTY=$(tty)
-- echo $GPG_SECRET_KEYS | base64 --decode | $GPG_EXECUTABLE --import
-- echo $GPG_OWNERTRUST | base64 --decode | $GPG_EXECUTABLE --import-ownertrust
-- cat /etc/hosts
-- sudo hostname "$(hostname | cut -c1-63)"
-- sed -e "s/^\\(127\\.0\\.0\\.1.*\\)/\\1 $(hostname | cut -c1-63)/" /etc/hosts | sudo
-  tee /etc/hosts
-- cat /etc/hosts
-- mvn help:evaluate -N -Dexpression=project.version|grep -v '\[' |  cut -d'-' -f 1  |cut -d'.' -f1-2
-- export project_version=$(mvn help:evaluate -N -Dexpression=project.version|grep -v '\[' | cut -d'-' -f 1 | cut -d'.' -f1-2)
-- git config --local user.name "travis-ci"
-- git config --local user.email "build@travis.ci"
-- export TRAVIS_JOB_NUMBER1=${TRAVIS_JOB_NUMBER:-$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)}
-- TRAVIS_JOB_NUMBER1=$(echo $TRAVIS_JOB_NUMBER1 | cut -d'.' -f1)
-- export NEW_VERSION=$project_version.$TRAVIS_JOB_NUMBER1
-- mvn versions:set -DnewVersion=$NEW_VERSION
-
-before_deploy:
-- git tag $NEW_VERSION
-
-after_deploy:
-- mvn versions:set -DnewVersion=$NEW_VERSION-SNAPSHOT
-- sh .travis/push.sh
-
 env:
   global:
   - CODECOV_TOKEN="a7e80b40-89ed-4d53-b595-dc147229e68f"
@@ -32,29 +7,63 @@ jdk:
 - openjdk8
 branches:
   only:
+  - develop
   - master
-after_success:
-- bash <(curl -s https://codecov.io/bash) -t "a7e80b40-89ed-4d53-b595-dc147229e68f"
-
-
-deploy:
-  provider: releases
-  api_key:
-    secure: vaz/OrLwayipY8axrE0lVexyV0MIowN4wggkAwZPn3t77g3uGB7hD3drPklkptLdIeXRTKpFu8Cduz4n/v5a5JnhhsR3cDmQatGa4/3NzpJNjUEs3NEcFww7KEFMqsuiTh+3cazWT02b9wmwyaJ6tGW2VXI+r8S6qeQVbguEHH4SKoptU6Nf/ONUMIkCGgCnWji9WlnvgMsxUXA2Q9c31MUq5Pi/BVLEWAm+SVMU1AJRDQIXd+qJduo0vEVH7vaHFgS3jO78PyISzZdKaKw9aQGutFuiEp3TzkD9KcmS6J13Akk23ZwCE7U/U3wLnvDBDn26QUYmJPMRZcH+MmXeCL4w9D5s/Rt7ifFcosh0Xg08JSsmgsB0F9Tjpn4oeWip9u2c7bf3fIm4rHf1g0NjPsUJD9OX2aQ9MyR+Woyv8f0o/FSRQd8iAVwX/6BmaSG86R9TzQIz+6K0z+JvAfRXmYotU/XBtr9k0OiDJN+zxEAuSBp78GKtFxyzpulxs6cRf4bOnzKx7pOMHFeLFMbdYkOoebQd4g2u3BT+CLyCjcfxNbyLwYazlt+swd9MawddojA2JTK9NRjosYrZ/OxnggOExH9P+GESM3ivUFhT+g2AavkliWU8zeF8Sx5+emPM+Jxawi8v9rRIeicY7KTHLRaBHpq0C6J1zmQp1bkPAHg=
-  file:
-  - symspell-lib/target/symspell-lib-$NEW_VERSION.jar
-  on:
-    repo: MighTguY/customized-symspell
-  skip_cleanup: true
-  name: $project_version
-
-install:
-  mvn --settings .maven.xml install -DskipTests=true -Dgpg.skip -Dmaven.javadoc.skip=true -B -V
-
-## Build and release to maven central
-script:
-  mvn clean deploy --settings .maven.xml -DskipTests=true -B -U -Prelease
 
 cache:
   directories:
   - ~/.m2/repository
+
+jobs:
+  include:
+  - stage: build_master
+    if: branch = master
+
+    before_install:
+    - echo "Build Started for Master"
+    - mvn help:evaluate -N -Dexpression=project.version|grep -v '\[' |  cut -d'-' -f 1  |cut -d'.' -f1-2
+    - export project_version=$(mvn help:evaluate -N -Dexpression=project.version|grep -v '\[' | cut -d'-' -f 1 | cut -d'.' -f1-2)
+    - git config --local user.name "travis-ci"
+    - git config --local user.email "build@travis.ci"
+    - export TRAVIS_JOB_NUMBER1=${TRAVIS_JOB_NUMBER:-$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)}
+    - TRAVIS_JOB_NUMBER1=$(echo $TRAVIS_JOB_NUMBER1 | cut -d'.' -f1)
+    - export NEW_VERSION=$project_version.$TRAVIS_JOB_NUMBER1
+    - mvn versions:set -DnewVersion=$NEW_VERSION
+
+    install:
+    - mvn --settings .maven.xml install -Dgpg.skip  -B -V
+
+    script:
+    - mvn clean deploy --settings .maven.xml -DskipTests=true -B -U -Prelease
+
+    after_success:
+    - bash <(curl -s https://codecov.io/bash) -t "a7e80b40-89ed-4d53-b595-dc147229e68f"
+
+    before_deploy:
+    - git tag $NEW_VERSION
+
+    deploy:
+      provider: releases
+      api_key:
+        secure: vaz/OrLwayipY8axrE0lVexyV0MIowN4wggkAwZPn3t77g3uGB7hD3drPklkptLdIeXRTKpFu8Cduz4n/v5a5JnhhsR3cDmQatGa4/3NzpJNjUEs3NEcFww7KEFMqsuiTh+3cazWT02b9wmwyaJ6tGW2VXI+r8S6qeQVbguEHH4SKoptU6Nf/ONUMIkCGgCnWji9WlnvgMsxUXA2Q9c31MUq5Pi/BVLEWAm+SVMU1AJRDQIXd+qJduo0vEVH7vaHFgS3jO78PyISzZdKaKw9aQGutFuiEp3TzkD9KcmS6J13Akk23ZwCE7U/U3wLnvDBDn26QUYmJPMRZcH+MmXeCL4w9D5s/Rt7ifFcosh0Xg08JSsmgsB0F9Tjpn4oeWip9u2c7bf3fIm4rHf1g0NjPsUJD9OX2aQ9MyR+Woyv8f0o/FSRQd8iAVwX/6BmaSG86R9TzQIz+6K0z+JvAfRXmYotU/XBtr9k0OiDJN+zxEAuSBp78GKtFxyzpulxs6cRf4bOnzKx7pOMHFeLFMbdYkOoebQd4g2u3BT+CLyCjcfxNbyLwYazlt+swd9MawddojA2JTK9NRjosYrZ/OxnggOExH9P+GESM3ivUFhT+g2AavkliWU8zeF8Sx5+emPM+Jxawi8v9rRIeicY7KTHLRaBHpq0C6J1zmQp1bkPAHg=
+      file:
+      - symspell-lib/target/symspell-lib-$NEW_VERSION.jar
+      on:
+        repo: MighTguY/customized-symspell
+      skip_cleanup: true
+      name: $project_version
+
+    after_deploy:
+      - mvn versions:set -DnewVersion=$NEW_VERSION-SNAPSHOT
+      - sh .travis/push.sh
+
+  - stage: build_develop
+    if: branch = develop
+    before_install:
+      - echo "Build Started for Develop"
+    install:
+      - mvn --settings .maven.xml install -Dgpg.skip  -B -V
+    after_success:
+      - bash <(curl -s https://codecov.io/bash) -t "a7e80b40-89ed-4d53-b595-dc147229e68f"
+
+
