@@ -63,7 +63,7 @@ public final class SpellHelper {
    */
   public static List<SuggestionItem> earlyExit(List<SuggestionItem> suggestionItems,
       String phrase, double maxEditDistance) {
-    if (CollectionUtils.isNotEmpty(suggestionItems)) {
+    if (CollectionUtils.isEmpty(suggestionItems)) {
       suggestionItems.add(new SuggestionItem(phrase, maxEditDistance + 1, 0));
     }
     return suggestionItems;
