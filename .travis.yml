@@ -17,7 +17,7 @@ cache:
 jobs:
   include:
   - stage: build_master
-    if: branch = master NOT type = pull_request
+    if: branch = master AND type = push
 
     before_install:
     - echo "Build Started for Master"
@@ -64,9 +64,8 @@ jobs:
     after_deploy:
       - mvn versions:set -DnewVersion=$NEW_VERSION-SNAPSHOT
       - sh .travis/push.sh
-
   - stage: build_develop
-    if: branch = develop NOT type = pull_request
+    if: branch = develop AND type = push
     before_install:
       - echo "Build Started for Develop"
       - export GPG_TTY=$(tty)
@@ -81,7 +80,6 @@ jobs:
       - mvn --settings .maven.xml install -Dgpg.skip  -B -V
     after_success:
       - bash <(curl -s https://codecov.io/bash) -t "a7e80b40-89ed-4d53-b595-dc147229e68f"
-
   - stage: build_pr
     if: type = pull_request
     before_install:
