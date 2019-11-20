@@ -2,6 +2,7 @@
 [![codecov](https://codecov.io/gh/MighTguY/customized-symspell/branch/master/graph/badge.svg)](https://codecov.io/gh/MighTguY/customized-symspell)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://raw.githubusercontent.com/MighTguY/customized-symspell/master/LICENSE)
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.mightguy/symspell-lib.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.mightguy%22%20AND%20a:%22symspell-lib%22)
+[![javadoc.io](https://javadoc.io/badge2/io.github.mightguy/symspell-lib/javadoc.io.svg)](https://javadoc.io/doc/io.github.mightguy/symspell-lib)
 
 # Customized SymSpell SpellCheck Java 
 **This custmoized spell check is is based on the spell correction fuzzy search library [SymSpell](https://github.com/wolfgarbe/symspell) with a few customizations and optimizations**  
