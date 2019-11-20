@@ -107,7 +107,7 @@ public class InMemoryDataHolder implements DataHolder {
     //create deletes
     Set<String> editDeletes = SpellHelper
         .getEditDeletes(key, spellCheckSettings.getMaxEditDistance(),
-            spellCheckSettings.getPrefixLength());
+            spellCheckSettings.getPrefixLength(), spellCheckSettings.getEditFactor());
     for (String delete : editDeletes) {
       Long hash = hashFunction.hash(delete);
       String[] suggestions;

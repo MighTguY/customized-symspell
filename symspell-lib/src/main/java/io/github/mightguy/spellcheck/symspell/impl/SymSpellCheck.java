@@ -21,7 +21,6 @@ import org.apache.commons.lang3.StringUtils;
 
 /**
  * Symspell variant of the Spellchecker
- *
  */
 public class SymSpellCheck extends SpellChecker {
 
@@ -276,7 +275,8 @@ public class SymSpellCheck extends SpellChecker {
     Early exit when word is too big
      */
     if ((phraseLen - maxEditDistance) > spellCheckSettings.getMaxLength()) {
-      return SpellHelper.earlyExit(suggestionItems, phrase, maxEditDistance);
+      return SpellHelper.earlyExit(suggestionItems, phrase, maxEditDistance,
+          spellCheckSettings.isIgnoreUnknown());
     }
 
     Double frequency = dataHolder.getItemFrequency(phrase);
@@ -286,7 +286,8 @@ public class SymSpellCheck extends SpellChecker {
       suggestionItems.add(new SuggestionItem(phrase, 0, suggestionCount));
 
       if (verbosity != Verbosity.ALL) {
-        return SpellHelper.earlyExit(suggestionItems, phrase, maxEditDistance);
+        return SpellHelper.earlyExit(suggestionItems, phrase, maxEditDistance,
+            spellCheckSettings.isIgnoreUnknown());
       }
     }
 
