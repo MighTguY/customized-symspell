@@ -373,6 +373,7 @@
 
   <modules>
     <module>symspell-lib</module>
+    <module>symspell-console</module>
   </modules>
 
 </project>
