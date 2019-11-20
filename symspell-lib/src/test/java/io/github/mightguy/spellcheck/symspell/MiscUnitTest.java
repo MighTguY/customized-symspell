@@ -77,7 +77,7 @@ public class MiscUnitTest {
 
   @Test
   public void testSpellDeletes() {
-    Set<String> del = SpellHelper.getEditDeletes("a", 2.0, 0);
+    Set<String> del = SpellHelper.getEditDeletes("a", 2.0, 0, 1);
     Assert.assertNotNull(del);
     Assert.assertEquals(1, del.size());
 
@@ -89,10 +89,16 @@ public class MiscUnitTest {
   @Test
   public void testEarlyExit() {
     List<SuggestionItem> suggestionItems = new ArrayList<>();
-    List<SuggestionItem> suggestionItems1 = SpellHelper.earlyExit(suggestionItems, "term", 2.0);
+    List<SuggestionItem> suggestionItems1 = SpellHelper
+        .earlyExit(suggestionItems, "term", 2.0, false);
 
     Assert.assertNotNull(suggestionItems1);
     Assert.assertEquals(1, suggestionItems1.size());
+    suggestionItems = new ArrayList<>();
+    suggestionItems1 = SpellHelper
+        .earlyExit(suggestionItems, "term", 2.0, true);
+    Assert.assertNotNull(suggestionItems1);
+    Assert.assertEquals(0, suggestionItems1.size());
   }
 
   @Test

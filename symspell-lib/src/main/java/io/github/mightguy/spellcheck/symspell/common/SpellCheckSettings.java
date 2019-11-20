@@ -8,8 +8,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * SpellCheckSetting contians all the setting used by
- * {@link SpellChecker}
+ * SpellCheckSetting contians all the setting used by {@link SpellChecker}
  */
 @ToString
 @Builder
@@ -90,5 +89,17 @@ public class SpellCheckSettings {
   @Setter
   @Builder.Default
   private double bigramCountMin = Double.MAX_VALUE;
+
+  /**
+   * Ignore the word in resultset, if suggestions are empty
+   */
+  @Builder.Default
+  private boolean ignoreUnknown = true;
+
+  /**
+   * Edit Factor to compute max edit distance possible for a word.
+   */
+  @Builder.Default
+  private double editFactor = 0.3;
 
 }

@@ -16,7 +16,7 @@ public final class SpellHelper {
    * Generate delete string set  for the Key.
    */
   public static Set<String> getEditDeletes(String key,
-      double maxEditDistance, int prefixLength) {
+      double maxEditDistance, int prefixLength, double editFactor) {
     Set<String> deletedWords = new HashSet<>();
     if (key.length() <= maxEditDistance) {
       deletedWords.add("");
@@ -26,11 +26,10 @@ public final class SpellHelper {
           .add(key.substring(0,
               prefixLength < key.length() ? prefixLength : key.length()));
     }
-    return edits(key, 0, deletedWords, getEdistance(maxEditDistance, key.length()));
+    return edits(key, 0, deletedWords, getEdistance(maxEditDistance, key.length(), editFactor));
   }
 
-  private static Double getEdistance(double maxEditDistance, int length) {
-    double factor = 0.3;
+  private static Double getEdistance(double maxEditDistance, int length, double factor) {
     double computedEd = Math.round(factor * length);
     if (Math.min(maxEditDistance, computedEd) == maxEditDistance) {
       return maxEditDistance;
@@ -62,8 +61,8 @@ public final class SpellHelper {
    * Early exit method
    */
   public static List<SuggestionItem> earlyExit(List<SuggestionItem> suggestionItems,
-      String phrase, double maxEditDistance) {
-    if (CollectionUtils.isEmpty(suggestionItems)) {
+      String phrase, double maxEditDistance, boolean ignoreUnknown) {
+    if (CollectionUtils.isEmpty(suggestionItems) && !ignoreUnknown) {
       suggestionItems.add(new SuggestionItem(phrase, maxEditDistance + 1, 0));
     }
     return suggestionItems;
