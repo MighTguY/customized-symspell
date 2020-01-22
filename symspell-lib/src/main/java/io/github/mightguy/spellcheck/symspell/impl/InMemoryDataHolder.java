@@ -71,6 +71,9 @@ public class InMemoryDataHolder implements DataHolder {
 
     double frequency = dictionaryItem.getFrequency();
     String key = dictionaryItem.getTerm();
+    if (spellCheckSettings.isLowerCaseTerms()) {
+      key = key.toLowerCase();
+    }
     if (frequency <= 0) {
       frequency = 0;
     }

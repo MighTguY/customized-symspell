@@ -60,6 +60,9 @@ public class SymSpellCheck extends SpellChecker {
       throw new SpellCheckException(SpellCheckExceptionCode.LOOKUP_ERROR,
           "Invalid input of string");
     }
+    if (spellCheckSettings.isLowerCaseTerms()) {
+      phrase = phrase.toLowerCase();
+    }
     String[] items = SpellHelper.tokenizeOnWhiteSpace(phrase);
     List<SuggestionItem> suggestions;
     List<SuggestionItem> suggestionParts = new ArrayList<>();
@@ -265,6 +268,9 @@ public class SymSpellCheck extends SpellChecker {
     }
 
     int phraseLen = phrase.length();
+    if (spellCheckSettings.isLowerCaseTerms()) {
+      phrase = phrase.toLowerCase();
+    }
     double suggestionCount = 0;
     Set<String> consideredDeletes = new HashSet<>();
     Set<String> consideredSuggestions = new HashSet<>();
@@ -541,6 +547,9 @@ public class SymSpellCheck extends SpellChecker {
      */
     if (phrase.isEmpty()) {
       return new Composition();
+    }
+    if (spellCheckSettings.isLowerCaseTerms()) {
+      phrase = phrase.toLowerCase();
     }
     int arraySize = Math.min(maxSegmentationWordLength, phrase.length());
     Composition[] compositions = new Composition[arraySize];
