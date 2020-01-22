@@ -5,7 +5,7 @@
 [![javadoc.io](https://javadoc.io/badge2/io.github.mightguy/symspell-lib/javadoc.io.svg)](https://javadoc.io/doc/io.github.mightguy/symspell-lib)
 
 # Customized SymSpell SpellCheck Java 
-**This custmoized spell check is is based on the spell correction fuzzy search library [SymSpell](https://github.com/wolfgarbe/symspell) with a few customizations and optimizations**  
+**This customized spell check is is based on the spell correction fuzzy search library [SymSpell](https://github.com/wolfgarbe/symspell) with a few customizations and optimizations**  
 
 ## Java Ported v6.6 (Bigrams)
 * the optional bigram dictionary in order to use sentence level context information for selecting best spelling correction.
