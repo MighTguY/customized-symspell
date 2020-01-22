@@ -35,6 +35,7 @@
     </jacoco.unittests.reportPath>
     <maven.surefire.plugin.version>2.20.1</maven.surefire.plugin.version>
     <skip.unit.tests>false</skip.unit.tests>
+    <surefireArgLine>-Dtest.solr.allowed.securerandom=NativePRNG</surefireArgLine>
     <coverage.threshold>0.0</coverage.threshold> <!-- //TODO: update to 75%-->
     <sonar.jacoco.reportPath>${jacoco.unittests.destFile}</sonar.jacoco.reportPath>
     <sonar-jacoco-listeners.version>3.2</sonar-jacoco-listeners.version>
@@ -49,6 +50,7 @@
     <sonar.sources>src/main/java</sonar.sources>
     <sonar.binaries>target/classes</sonar.binaries>
     <sonar.tests>src/test/java</sonar.tests>
+    <solr.version>7.6.0</solr.version>
   </properties>
 
   <dependencyManagement>
@@ -82,6 +84,17 @@
         <groupId>org.slf4j</groupId>
         <artifactId>slf4j-api</artifactId>
         <version>1.7.25</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.solr</groupId>
+        <artifactId>solr-core</artifactId>
+        <version>${solr.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.solr</groupId>
+        <artifactId>solr-test-framework</artifactId>
+        <version>${solr.version}</version>
+        <scope>test</scope>
       </dependency>
     </dependencies>
   </dependencyManagement>
@@ -374,6 +387,7 @@
   <modules>
     <module>symspell-lib</module>
     <module>symspell-console</module>
+    <module>symspell-solr</module>
   </modules>
 
 </project>
