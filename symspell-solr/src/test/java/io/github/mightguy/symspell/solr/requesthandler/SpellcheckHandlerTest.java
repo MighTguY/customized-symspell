@@ -55,7 +55,7 @@ public class SpellcheckHandlerTest extends SolrTestCaseJ4 {
         hasJsonPath("$.lookup_wordbreak.CorrectedString", equalTo("another title")));
 
     assertThat(h.query("/spellcheck", req("cspellcheck.q", "Maryha d litatle mamb", "wt", "json")),
-        hasJsonPath("$.lookup_wordbreak.CorrectedString", equalTo("Mary had little lamb")));
+        hasJsonPath("$.lookup_wordbreak.CorrectedString", equalTo("mary had little lamb")));
   }
 
   @Test
