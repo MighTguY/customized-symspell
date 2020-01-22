@@ -76,20 +76,20 @@ public class SpellCheckerConsole {
 
   }
 
-  private void suggestItemOnArgs(String inputTerm) throws IOException, SpellCheckException {
+  private void suggestItemOnArgs(String inputTerm) throws SpellCheckException {
     List<SuggestionItem> suggestions = symSpellCheck.lookup(inputTerm);
     SuggestionItem compound = symSpellCheck.lookupCompound(inputTerm).get(0);
     Composition composition = symSpellCheck.wordBreakSegmentation(inputTerm, 10, 2);
 
     suggestions.stream()
         .limit(10)
-        .forEach(suggestion -> System.out.println(
+        .forEach(suggestion -> log.info(
             "Lookup suggestion: "
                 + suggestion.getTerm() + " "
                 + suggestion.getDistance() + " "
                 + suggestion.getCount()));
-    System.out.println("LookupCompound: " + compound.getTerm());
-    System.out.println("Composition: " + composition.getCorrectedString());
+    log.info("LookupCompound: " + compound.getTerm());
+    log.info("Composition: " + composition.getCorrectedString());
   }
 
   private void suggestItemOnConsole() throws IOException, SpellCheckException {
@@ -97,7 +97,7 @@ public class SpellCheckerConsole {
     BufferedReader reader =
         new BufferedReader(new InputStreamReader(System.in));
     while (true) {
-      System.out.println("Please enter the term to get the suggest Item");
+      log.info("Please enter the term to get the suggest Item");
       inputTerm = reader.readLine();
       if (inputTerm.equalsIgnoreCase("q")) {
         return;
