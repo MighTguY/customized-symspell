@@ -229,7 +229,7 @@ public class SymSpellCheck extends SpellChecker {
           }
         } else if ((suggestions1.get(0).getTerm() + suggestions2.get(0).getTerm()).equals(word)) {
           count = Math.max(count,
-              Math.max(suggestions1.get(0).getCount(), suggestions2.get(0).getCount()) + 2);
+              Math.max(suggestions1.get(0).getCount(), suggestions2.get(0).getCount()));
         }
       } else {
         count = Math.min(spellCheckSettings.getBigramCountMin(),

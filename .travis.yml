@@ -1,6 +1,3 @@
-env:
-  global:
-  - CODECOV_TOKEN="a7e80b40-89ed-4d53-b595-dc147229e68f"
 
 language: java
 jdk:
@@ -15,7 +12,6 @@ addons:
     organization: "sonarcloud"
     token:
       secure: "ASXWKuOdMi0AqVIS4iW3xvik39qs2S4CTb6H4cuCSvL09kqwxqGRWrk7ZvK2F4cpqUL+aaLO6pIdIZvbM3CXwSdqbNoADv2Qyui0VKTKBZ9rvG2c/ouNnrPKkvyydVA4VcfKiJnnU9h6kH072XQfQg5oWdjFFPX9iyxT9Mpo+FPfjmoEEBt9j6/5BSZvusBOwkcRKwRBLGV2emR2dKSt/zv/fFThxbXXo7pikVfISJmp9leYqOFuYj32WVmiwJycj0n2m1+Ks44Unq4nolEqWDngDKottOCN2PNMf6Av3jMULbUfRkIMT3n1/J14lsRWbp694E4p0wEXZmCM9f6GkZZoOCNtyeyGu9kK9hRZK9UqjckJAA4aggfiUK2BZK2iWMMK67Wgrvtjf+IqBjFy6Lfgra3d6C29OOxU0nu9nSYo50prgeGkl9KfkCqqr0UioNFNJLwqFcQS2cPNkCvc7oJrOkhxmkxAfDsYexsQhS7VQnsd+PHuxU1o2mtwIe0nadVio2T3ooBiulDzL6XTcmFYWrsCCNkNfbaq5JNTJcTanA7OonSUO6dFK+8eMunNpAc2H4WYlHW5T/BgfvtBAaihdiR6YEKEhCnEe25AmZBryMTc5gTPxPj9up+WevyD8Kj4y9xXyD0py4CyFkUxakVMd0U9jncdKWRwUQ1F3mU="
-
 
 cache:
   directories:
@@ -53,7 +49,7 @@ jobs:
     - mvn clean deploy --settings .maven.xml -DskipTests=true -B -U -Prelease
 
     after_success:
-    - bash <(curl -s https://codecov.io/bash) -t "a7e80b40-89ed-4d53-b595-dc147229e68f"
+    - bash <(curl -s https://codecov.io/bash)
 
     before_deploy:
     - git tag $NEW_VERSION
@@ -70,26 +66,27 @@ jobs:
       name: $project_version
 
     after_deploy:
-      - mvn versions:set -DnewVersion=$NEW_VERSION-SNAPSHOT
-      - sh .travis/push.sh
+    - mvn versions:set -DnewVersion=$NEW_VERSION-SNAPSHOT
+    - sh .travis/push.sh
   - stage: build_develop
     if: branch = develop AND type = push
     before_install:
-      - echo "Build Started for Develop"
-      - export GPG_TTY=$(tty)
-      - echo $GPG_SECRET_KEYS | base64 --decode | $GPG_EXECUTABLE --import
-      - echo $GPG_OWNERTRUST | base64 --decode | $GPG_EXECUTABLE --import-ownertrust
-      - cat /etc/hosts
-      - sudo hostname "$(hostname | cut -c1-63)"
-      - sed -e "s/^\\(127\\.0\\.0\\.1.*\\)/\\1 $(hostname | cut -c1-63)/" /etc/hosts | sudo
-        tee /etc/hosts
-      - cat /etc/hosts
+    - echo "Build Started for Develop"
+    - export GPG_TTY=$(tty)
+    - echo $GPG_SECRET_KEYS | base64 --decode | $GPG_EXECUTABLE --import
+    - echo $GPG_OWNERTRUST | base64 --decode | $GPG_EXECUTABLE --import-ownertrust
+    - cat /etc/hosts
+    - sudo hostname "$(hostname | cut -c1-63)"
+    - sed -e "s/^\\(127\\.0\\.0\\.1.*\\)/\\1 $(hostname | cut -c1-63)/" /etc/hosts | sudo
+      tee /etc/hosts
+    - cat /etc/hosts
     install:
     - mvn --settings .maven.xml install -Dgpg.skip  -B -V
     script:
     - mvn cobertura:cobertura
+
     after_success:
-      - bash <(curl -s https://codecov.io/bash) -t "a7e80b40-89ed-4d53-b595-dc147229e68f"
+    - bash <(curl -s https://codecov.io/bash)
   - stage: build_pr
     if: type = pull_request
     before_install:
