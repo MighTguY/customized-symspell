@@ -46,7 +46,6 @@ jobs:
 
     script:
     - mvn clean deploy --settings .maven.xml -DskipTests=true -B -U -Prelease
-    - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=MighTguY_customized-symspell
 
     after_success:
     - bash <(curl -s https://codecov.io/bash)
@@ -83,7 +82,6 @@ jobs:
     install:
     - mvn --settings .maven.xml install -Dgpg.skip  -B -V
     script:
-    - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=MighTguY_customized-symspell
     - mvn cobertura:cobertura
 
     after_success:
