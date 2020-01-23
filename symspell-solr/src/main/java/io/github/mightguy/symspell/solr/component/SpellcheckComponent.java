@@ -21,6 +21,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -200,7 +201,9 @@ public class SpellcheckComponent extends SearchComponent implements SolrCoreAwar
 
     String unigramsFile = SearchRequestUtil.getFromNamedList(spellcheckerNL, "unigrams_file", null);
     String bigramsFile = SearchRequestUtil.getFromNamedList(spellcheckerNL, "bigrams_file", null);
-    loadDefault(unigramsFile, bigramsFile, spellChecker, core);
+    String exclusionsFile = SearchRequestUtil
+        .getFromNamedList(spellcheckerNL, "exclusions_file", null);
+    loadDefault(unigramsFile, bigramsFile, exclusionsFile, spellChecker, core);
     boolean buildOnCommit = Boolean.parseBoolean((String) spellcheckerNL.get("buildOnCommit"));
     boolean buildOnOptimize = Boolean.parseBoolean((String) spellcheckerNL.get("buildOnOptimize"));
     if (buildOnCommit || buildOnOptimize) {
@@ -211,7 +214,8 @@ public class SpellcheckComponent extends SearchComponent implements SolrCoreAwar
 
   }
 
-  private void loadDefault(String unigramsFile, String bigramsFile, SpellChecker spellChecker,
+  private void loadDefault(String unigramsFile, String bigramsFile, String exclusionsFile,
+      SpellChecker spellChecker,
       SolrCore core) {
     try {
       if (!StringUtils.isEmpty(unigramsFile)) {
@@ -223,6 +227,12 @@ public class SpellcheckComponent extends SearchComponent implements SolrCoreAwar
         loadBiGramFile(core.getResourceLoader().openResource(bigramsFile),
             spellChecker.getDataHolder());
       }
+
+      if (!StringUtils.isEmpty(exclusionsFile)) {
+        loadExclusions(core.getResourceLoader().openResource(exclusionsFile),
+            spellChecker.getDataHolder());
+      }
+
     } catch (SpellCheckException | IOException ex) {
       log.error("Error occured while loading default Configs for Spellcheck");
     }
@@ -249,6 +259,20 @@ public class SpellcheckComponent extends SearchComponent implements SolrCoreAwar
         String[] arr = line.split("\\s+");
         dataHolder
             .addItem(new DictionaryItem(arr[0] + " " + arr[1], Double.parseDouble(arr[2]), -1.0));
+      }
+    }
+  }
+
+  private void loadExclusions(InputStream inputStream, DataHolder dataHolder)
+      throws IOException, SpellCheckException {
+    try (BufferedReader br = new BufferedReader(
+        new InputStreamReader(inputStream))) {
+      String line;
+      while ((line = br.readLine()) != null) {
+        String[] arr = line.split("\\s+");
+        if (arr.length == 2) {
+          dataHolder.addExclusionItem(arr[0], arr[1]);
+        }
       }
     }
   }

@@ -69,6 +69,7 @@
       <int name="prefixLength">12</int>
       <str name="buildOnCommit">true</str>
       <int name="countThreshold">0</int>
+      <str name="exclusions_file">exclusions_stem.txt</str>
     </lst>
   </searchComponent>
 

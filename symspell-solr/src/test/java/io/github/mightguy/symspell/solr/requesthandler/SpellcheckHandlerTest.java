@@ -58,6 +58,18 @@ public class SpellcheckHandlerTest extends SolrTestCaseJ4 {
         hasJsonPath("$.lookup_wordbreak.CorrectedString", equalTo("mary had little lamb")));
   }
 
+
+  @Test
+  public void testExclusionList() throws Exception {
+    assertThat(h.query("/spellcheck", req("cspellcheck.q", "sweetnr", "wt", "json")),
+        hasJsonPath("$.lookup_wordbreak.CorrectedString", equalTo("sweetner")));
+
+    assertThat(h.query("/spellcheck", req("cspellcheck.q", "tiatlle", "wt", "json")),
+        hasJsonPath("$.lookup_wordbreak.CorrectedString", equalTo("title")));
+
+  }
+
+
   @Test
   public void testQueryWithUnigramBigram() throws Exception {
     assertThat(h.query("/spellcheck",

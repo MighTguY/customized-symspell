@@ -64,9 +64,17 @@ public class SymSpellCheck extends SpellChecker {
       phrase = phrase.toLowerCase();
     }
     String[] items = SpellHelper.tokenizeOnWhiteSpace(phrase);
-    List<SuggestionItem> suggestions;
+    List<SuggestionItem> suggestions = new ArrayList<>();
     List<SuggestionItem> suggestionParts = new ArrayList<>();
     boolean isLastCombi = false;
+
+    /*
+      Early exit when in exclusion list
+     */
+    if (StringUtils.isNotEmpty(dataHolder.getExclusionItem(phrase))) {
+      return SpellHelper
+          .earlyExit(suggestions, dataHolder.getExclusionItem(phrase), maxEditDistance, false);
+    }
 
     for (int i = 0; i < items.length; i++) {
       //Normal suggestions
@@ -276,6 +284,14 @@ public class SymSpellCheck extends SpellChecker {
     Set<String> consideredSuggestions = new HashSet<>();
     List<SuggestionItem> suggestionItems = new ArrayList<>(
         spellCheckSettings.getTopK());
+
+    /*
+      Early exit when in exclusion list
+     */
+    if (StringUtils.isNotEmpty(dataHolder.getExclusionItem(phrase))) {
+      return SpellHelper
+          .earlyExit(suggestionItems, dataHolder.getExclusionItem(phrase), maxEditDistance, false);
+    }
 
     /*
     Early exit when word is too big
@@ -551,6 +567,14 @@ public class SymSpellCheck extends SpellChecker {
     if (spellCheckSettings.isLowerCaseTerms()) {
       phrase = phrase.toLowerCase();
     }
+
+    /*
+      Early exit when in exclusion list
+     */
+    if (StringUtils.isNotEmpty(dataHolder.getExclusionItem(phrase))) {
+      return new Composition(phrase, dataHolder.getExclusionItem(phrase), 0, 0);
+    }
+
     int arraySize = Math.min(maxSegmentationWordLength, phrase.length());
     Composition[] compositions = new Composition[arraySize];
     for (int i = 0; i < arraySize; i++) {

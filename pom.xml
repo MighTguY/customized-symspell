@@ -53,6 +53,7 @@
     <solr.version>7.6.0</solr.version>
   </properties>
 
+
   <dependencyManagement>
     <dependencies>
       <dependency>

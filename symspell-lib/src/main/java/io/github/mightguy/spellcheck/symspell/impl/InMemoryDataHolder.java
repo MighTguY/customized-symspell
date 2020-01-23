@@ -22,6 +22,7 @@ public class InMemoryDataHolder implements DataHolder {
    */
   private Map<String, Double> wordsDictionary = new HashMap<>();
   private Map<String, Double> bigramsDictionary = new HashMap<>();
+  private Map<String, String> exclusionDictionary = new HashMap<>();
 
   /**
    * Dictionary of unique words that are  below the count threshold for being considered correct
@@ -193,5 +194,20 @@ public class InMemoryDataHolder implements DataHolder {
       return Double.MIN_VALUE;
     }
     return frequency;
+  }
+
+  @Override
+  public void addExclusionItem(String key, String value) {
+    exclusionDictionary.put(key, value);
+  }
+
+  @Override
+  public void addExclusionItems(Map<String, String> values) {
+    exclusionDictionary.putAll(values);
+  }
+
+  @Override
+  public String getExclusionItem(String key) {
+    return exclusionDictionary.getOrDefault(key, null);
   }
 }
