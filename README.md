@@ -51,6 +51,16 @@ Word deletes are generated with taking edit distance which is minimum of max edi
 ## [Usage](symspell-lib/README.md)
 
 ## [Solr Usage](symspell-solr/README.md)
+
+## Benchmark Summary
+We have done 3 runs each for 30k and 80k data set, which also includes results for each verbosity level.
+After the runs the final benchmarking looks like: 
+```
+Average Precalculation time instance 30843.33 ms
+Average Lookup time instance 138141.09296296295 ns ~ 0.03814 ms
+Total Lookup results instance 648092
+``` 
+[More  Detailed summary](symspell-benchmark/README.md)
   
 ## Built With
 
