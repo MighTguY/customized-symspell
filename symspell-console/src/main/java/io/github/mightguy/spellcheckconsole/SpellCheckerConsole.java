@@ -106,6 +106,12 @@ public class SpellCheckerConsole {
     }
   }
 
+  /**
+   * Main Method for Console
+   * @param args
+   * @throws IOException
+   * @throws SpellCheckException
+   */
   public static void main(String[] args) throws IOException, SpellCheckException {
     SpellCheckerConsole spellCheckerConsole = new SpellCheckerConsole();
     spellCheckerConsole.init();

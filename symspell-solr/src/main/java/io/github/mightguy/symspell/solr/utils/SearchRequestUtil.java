@@ -10,6 +10,16 @@ public final class SearchRequestUtil {
   private SearchRequestUtil() {
   }
 
+  /**
+   * Get Class  from class loader
+   * @param className
+   * @param loader
+   * @param abstractClass
+   * @param subPackages
+   * @param args
+   * @param <T>
+   * @return
+   */
   public static <T> T getClassFromLoader(String className, SolrResourceLoader loader,
       Class abstractClass, String[] subPackages, Object[] args) {
     Object obj = loader.newInstance(className, abstractClass, subPackages, new Class[0], args);
@@ -19,6 +29,14 @@ public final class SearchRequestUtil {
     return (T) obj;
   }
 
+  /**
+   * Get value of  Type T from named list
+   * @param namedList
+   * @param key
+   * @param def
+   * @param <T>
+   * @return
+   */
   public static <T> T getFromNamedList(NamedList namedList, String key, T def) {
     T val = (T) namedList.get(key);
     if (val == null) {
@@ -27,11 +45,23 @@ public final class SearchRequestUtil {
     return val;
   }
 
+  /**
+   * Check if the result greater than the spellcheck threshold
+   * @param rsp
+   * @param spellCheckThreshold
+   * @return
+   */
   public static boolean resultGreaterThanThreshold(SolrQueryResponse rsp,
       long spellCheckThreshold) {
     return !resultLessThanThreshold(rsp, spellCheckThreshold);
   }
 
+  /**
+   * Check if the result lesser than the spellcheck threshold
+   * @param rsp
+   * @param spellCheckThreshold
+   * @return
+   */
   public static boolean resultLessThanThreshold(SolrQueryResponse rsp, long spellCheckThreshold) {
     if (null == rsp.getResponse()) {
       return true;

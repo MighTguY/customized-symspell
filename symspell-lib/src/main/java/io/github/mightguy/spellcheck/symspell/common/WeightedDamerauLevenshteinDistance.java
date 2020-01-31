@@ -26,6 +26,14 @@ public class WeightedDamerauLevenshteinDistance implements StringDistance {
 
   private CharDistance charDistance;
 
+  /**
+   * Constructor for Weighted Damerau Levenshtein
+   * @param deletionWeight
+   * @param insertionWeight
+   * @param replaceWeight
+   * @param transpositionWeight
+   * @param charDistance
+   */
   public WeightedDamerauLevenshteinDistance(double deletionWeight, double insertionWeight,
       double replaceWeight, double transpositionWeight, CharDistance charDistance) {
     this.deletionWeight = deletionWeight;

@@ -28,6 +28,12 @@ public class CustomSpellCheckListner implements SolrEventListener {
   private final SpellChecker checker;
   private final List<String> fieldArr;
 
+  /**
+   * Constructor for listner
+   * @param core
+   * @param checker
+   * @param fieldArr
+   */
   public CustomSpellCheckListner(SolrCore core, SpellChecker checker, String[] fieldArr) {
     this.core = core;
     this.checker = checker;
@@ -56,11 +62,22 @@ public class CustomSpellCheckListner implements SolrEventListener {
     }
   }
 
+  /**
+   * Init method
+   * @param args
+   */
   @Override
   public void init(NamedList args) {
     // Nothing to do at init
   }
 
+  /**
+   * Relod method of spellcheck listner
+   * @param newSearcher
+   * @param checker
+   * @throws IOException
+   * @throws SpellCheckException
+   */
   public void reload(SolrIndexSearcher newSearcher, SpellChecker checker)
       throws IOException, SpellCheckException {
 

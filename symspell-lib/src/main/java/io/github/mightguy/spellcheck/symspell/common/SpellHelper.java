@@ -85,6 +85,12 @@ public final class SpellHelper {
     return Math.abs(d1 - d2) < threshold;
   }
 
+  /**
+   * Check if heads  are same
+   * @param suggestions
+   * @param suggestions1
+   * @return boolean
+   */
   public static boolean continueConditionIfHeadIsSame(List<SuggestionItem> suggestions,
       List<SuggestionItem> suggestions1) {
     return CollectionUtils.isEmpty(suggestions1)

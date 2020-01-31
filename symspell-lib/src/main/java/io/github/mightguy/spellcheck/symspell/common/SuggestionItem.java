@@ -28,6 +28,12 @@ public class SuggestionItem implements Comparator<SuggestionItem>, Comparable<Su
    */
   private double count;
 
+  /**
+   * COnstructor  for SuggestionItem
+   * @param term
+   * @param distance
+   * @param count
+   */
   public SuggestionItem(String term, double distance, double count) {
     this.term = term;
     this.distance = distance;
