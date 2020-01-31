@@ -33,6 +33,9 @@ public class QwertyDistance implements CharDistance {
     return this.operationCost[a][b];
   }
 
+  /**
+   * Initializing the cost matrix
+   */
   public void initializeCostMatrix() {
     for (double[] row : this.operationCost) {
       Arrays.fill(row, defaultValue);
