@@ -72,7 +72,7 @@ public class SymSpellTestWeighted {
     SymSpellTest.assertTypoAndCorrected(symSpellCheck,
         "slatew", "slate", 2);
     SymSpellTest.assertTypoAndCorrected(symSpellCheck,
-        "ith", "with", 2);
+        "ith", "it", 2);
     SymSpellTest.assertTypoAndCorrected(symSpellCheck,
         "plety", "plenty", 2);
     SymSpellTest.assertTypoAndCorrected(symSpellCheck,

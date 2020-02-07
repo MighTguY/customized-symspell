@@ -79,7 +79,7 @@ public class MiscUnitTest {
   public void testSpellDeletes() {
     Set<String> del = SpellHelper.getEditDeletes("a", 2.0, 0, 1);
     Assert.assertNotNull(del);
-    Assert.assertEquals(1, del.size());
+    Assert.assertEquals(2, del.size());
 
     Set<String> del1 = SpellHelper.edits("", 2.0, del, 2.0);
     Assert.assertNotNull(del);
