@@ -52,6 +52,20 @@ Word deletes are generated with taking edit distance which is minimum of max edi
 
 ## [Solr Usage](symspell-solr/README.md)
 
+## Accuracy Summary
+
+> Indexed Docs: 3695 
+
+>Searches: 8060
+
+| Spellcorrection Strategy 	| Accuracy 	| Failures 	| TP   	| TN  	| FP  	| FN   	|
+|--------------------------	|:--------:	|---------:	|------	|-----	|-----	|------	|
+| LUCENE                   	|  78.96%  	|   21.04% 	| 5883 	| 481 	| 146 	| 1550 	|
+| Vanilla SymSpell         	|  88.80%  	|   11.20% 	| 6888 	| 269 	| 358 	| 545  	|
+| Weighted SymSpell        	|  75.74%  	|   24.26% 	| 5781 	| 324 	| 303 	| 1652 	|
+| Qwerty Vanilla SymSpell  	| 88.57%   	| 11.43%   	| 6860 	| 279 	| 348 	| 573  	|
+| Qwerty Weighted SymSpell 	| 75.36%   	| 24.64%   	| 5744 	| 330 	| 297 	| 1689 	|
+
 ## Benchmark Summary
 We have done 3 runs each for 30k and 80k data set, which also includes results for each verbosity level.
 After the runs the final benchmarking looks like: 

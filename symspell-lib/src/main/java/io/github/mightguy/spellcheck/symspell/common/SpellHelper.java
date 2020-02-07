@@ -54,6 +54,7 @@ public final class SpellHelper {
         edits(delete, editDistance, deletedWords, maxEd);
       }
     }
+    deletedWords.add(word);
     return deletedWords;
   }
 
