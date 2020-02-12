@@ -77,7 +77,7 @@ public class SpellcheckComponent extends SearchComponent implements SolrCoreAwar
   public void process(ResponseBuilder rb) throws IOException {
     if (!rb.req.getParams().getBool(Constants.SPELLCHECK_ENABLE, true) || SearchRequestUtil
         .resultGreaterThanThreshold(rb.rsp, threshold)) {
-      log.warn("Spellcheck is disbaled either by query or result  greater than threshold [{}]",
+      log.debug("Spellcheck is disbaled either by query or result  greater than threshold [{}]",
           threshold);
       return;
     }
