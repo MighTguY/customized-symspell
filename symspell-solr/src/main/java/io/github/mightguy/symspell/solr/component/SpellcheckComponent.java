@@ -21,7 +21,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -203,7 +202,10 @@ public class SpellcheckComponent extends SearchComponent implements SolrCoreAwar
     String bigramsFile = SearchRequestUtil.getFromNamedList(spellcheckerNL, "bigrams_file", null);
     String exclusionsFile = SearchRequestUtil
         .getFromNamedList(spellcheckerNL, "exclusions_file", null);
-    loadDefault(unigramsFile, bigramsFile, exclusionsFile, spellChecker, core);
+    String exclustionnFileSeperator = SearchRequestUtil
+        .getFromNamedList(spellcheckerNL, "exclusions_file_sp", "\\s+");
+    loadDefault(unigramsFile, bigramsFile, exclusionsFile, spellChecker, core,
+        exclustionnFileSeperator);
     boolean buildOnCommit = Boolean.parseBoolean((String) spellcheckerNL.get("buildOnCommit"));
     boolean buildOnOptimize = Boolean.parseBoolean((String) spellcheckerNL.get("buildOnOptimize"));
     if (buildOnCommit || buildOnOptimize) {
@@ -216,7 +218,7 @@ public class SpellcheckComponent extends SearchComponent implements SolrCoreAwar
 
   private void loadDefault(String unigramsFile, String bigramsFile, String exclusionsFile,
       SpellChecker spellChecker,
-      SolrCore core) {
+      SolrCore core, String exclusionListSperatorRegex) {
     try {
       if (!StringUtils.isEmpty(unigramsFile)) {
         loadUniGramFile(core.getResourceLoader().openResource(unigramsFile),
@@ -230,7 +232,7 @@ public class SpellcheckComponent extends SearchComponent implements SolrCoreAwar
 
       if (!StringUtils.isEmpty(exclusionsFile)) {
         loadExclusions(core.getResourceLoader().openResource(exclusionsFile),
-            spellChecker.getDataHolder());
+            spellChecker.getDataHolder(), exclusionListSperatorRegex);
       }
 
     } catch (SpellCheckException | IOException ex) {
@@ -263,13 +265,13 @@ public class SpellcheckComponent extends SearchComponent implements SolrCoreAwar
     }
   }
 
-  private void loadExclusions(InputStream inputStream, DataHolder dataHolder)
+  private void loadExclusions(InputStream inputStream, DataHolder dataHolder, String seperatorRegex)
       throws IOException, SpellCheckException {
     try (BufferedReader br = new BufferedReader(
         new InputStreamReader(inputStream))) {
       String line;
       while ((line = br.readLine()) != null) {
-        String[] arr = line.split("\\s+");
+        String[] arr = line.split(seperatorRegex);
         if (arr.length == 2) {
           dataHolder.addExclusionItem(arr[0], arr[1]);
         }

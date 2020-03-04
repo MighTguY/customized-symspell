@@ -106,8 +106,8 @@ public class WeightedDamerauLevenshteinDistance implements StringDistance {
   private boolean isTransposition(int i, int j, String a, String b) {
     return i > 2
         && j > 2
-        && a.charAt(i - 2) == b.charAt(i - 1)
-        && b.charAt(j - 2) == a.charAt(j - 1);
+        && a.charAt(i - 2) == a.charAt(i - 1)
+        && b.charAt(j - 2) == b.charAt(j - 1);
   }
 
   private double getReplaceCost(char aI, char bJ, boolean useCharDistance) {
