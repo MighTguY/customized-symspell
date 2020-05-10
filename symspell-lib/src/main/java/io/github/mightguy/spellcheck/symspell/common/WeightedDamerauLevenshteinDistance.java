@@ -79,7 +79,6 @@ public class WeightedDamerauLevenshteinDistance implements StringDistance {
         double min = min(d[i - 1][j] + insertionWeight, //Insertion
             d[i][j - 1] + deletionWeight, //Deltion
             d[i - 1][j - 1] + cost); //Replacement
-//            min = min + cost;
         if (isTransposition(i, j, source, target)) {
           min = Math.min(min, d[i - 2][j - 2] + transpositionWeight); // transpose
         }
@@ -87,6 +86,16 @@ public class WeightedDamerauLevenshteinDistance implements StringDistance {
       }
     }
     return d[target.length()][source.length()];
+  }
+
+  @Override
+  public double getDistance(String w1, String w2, double maxEditDistance) {
+
+    double distance = getDistance(w1, w2);
+    if (distance > maxEditDistance) {
+      return -1;
+    }
+    return distance;
   }
 
   private double min(double a, double b, double c) {
@@ -98,15 +107,6 @@ public class WeightedDamerauLevenshteinDistance implements StringDistance {
   }
 
 
-  @Override
-  public double getDistance(String w1, String w2, double maxEditDistance) {
-
-    double distance = getDistance(w1, w2);
-    if (distance > maxEditDistance) {
-      return -1;
-    }
-    return distance;
-  }
 
   private boolean isTransposition(int i, int j, String source, String target) {
     return i > 2
