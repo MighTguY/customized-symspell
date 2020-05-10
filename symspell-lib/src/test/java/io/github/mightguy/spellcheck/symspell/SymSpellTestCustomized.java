@@ -81,7 +81,7 @@ public class SymSpellTestCustomized {
   public void testSingleWordCorrection() throws SpellCheckException {
 
     SymSpellTest.assertTypoAndCorrected(symSpellCheck,
-        "uick", "quick", 2);
+        "uick", "huck", 2);
     SymSpellTest.assertTypoAndCorrected(symSpellCheck,
         "bigjest", "biggest", 2);
     SymSpellTest.assertTypoAndCorrected(symSpellCheck,
