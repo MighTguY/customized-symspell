@@ -50,7 +50,7 @@
     <sonar.sources>src/main/java</sonar.sources>
     <sonar.binaries>target/classes</sonar.binaries>
     <sonar.tests>src/test/java</sonar.tests>
-    <solr.version>7.6.0</solr.version>
+    <solr.version>8.5.1</solr.version>
     <build-helper.plugin.version>3.0.0</build-helper.plugin.version>
     <jmh.version>1.19</jmh.version>
 
