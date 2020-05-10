@@ -44,53 +44,48 @@ public class WeightedDamerauLevenshteinDistance implements StringDistance {
   }
 
   @Override
-  public double getDistance(String a, String b) {
-    boolean useCharDistance = (charDistance != null && a.length() == b.length());
-    double[][] d = new double[a.length() + 1][b.length() + 1]; // 2d matrix
+  public double getDistance(String source, String target) {
 
-    // Step 1
-    if (a.length() == 0) {
-      return b.length();
+    if (source.equals(target)) {
+      return 0;
     }
-    if (b.length() == 0) {
-      return a.length();
+
+    if (source.length() == 0) {
+      return target.length();
     }
+
+    if (target.length() == 0) {
+      return source.length();
+    }
+
+    boolean useCharDistance = (charDistance != null && source.length() == target.length());
+    double[][] d = new double[target.length() + 1][source.length() + 1]; // 2d matrix
 
     // Step 2
-    for (int i = a.length(); i >= 0; i--) {
-      d[i][0] = i;  // Add deletion weight
+    for (int i = target.length(); i >= 0; i--) {
+      d[i][0] = i * insertionWeight;  // Add insertion weight
     }
-    for (int j = b.length(); j >= 0; j--) {
-      d[0][j] = j;
+    for (int j = source.length(); j >= 0; j--) {
+      d[0][j] = j * deletionWeight;
     }
 
-    for (int i = 1; i <= a.length(); i++) {
-      char aI = a.charAt(i - 1);
+    for (int i = 1; i <= target.length(); i++) {
+      char target_i = target.charAt(i - 1);
+      for (int j = 1; j <= source.length(); j++) {
+        char source_j = source.charAt(j - 1);
 
-      for (int j = 1; j <= b.length(); j++) {
-        char bJ = b.charAt(j - 1);
+        double cost = getReplaceCost(target_i, source_j, useCharDistance);
 
-        double cost = getReplaceCost(aI, bJ, useCharDistance);
-
-        double min = Math
-            .min(d[i - 1][j] + deletionWeight,
-                Math.min(d[i][j - 1] + insertionWeight,
-                    d[i - 1][j - 1] + cost));
-
-        if (isTransposition(i, j, a, b)) {
-          min = Math.min(min, d[i - 2][j - 2] + transpositionWeight);
+        double min = min(d[i - 1][j] + insertionWeight, //Insertion
+            d[i][j - 1] + deletionWeight, //Deltion
+            d[i - 1][j - 1] + cost); //Replacement
+        if (isTransposition(i, j, source, target)) {
+          min = Math.min(min, d[i - 2][j - 2] + transpositionWeight); // transpose
         }
-
-        if ((min == d[i - 1][j - 1] + cost) && useCharDistance && aI != bJ) {
-          useCharDistance = false;
-        }
-
         d[i][j] = min;
       }
     }
-
-    // Step 5
-    return d[a.length()][b.length()];
+    return d[target.length()][source.length()];
   }
 
   @Override
@@ -103,11 +98,21 @@ public class WeightedDamerauLevenshteinDistance implements StringDistance {
     return distance;
   }
 
-  private boolean isTransposition(int i, int j, String a, String b) {
+  private double min(double a, double b, double c) {
+    return Math.min(a, Math.min(b, c));
+  }
+
+  private double min(double a, double b, double c, double d) {
+    return Math.min(a, Math.min(b, Math.min(c, d)));
+  }
+
+
+
+  private boolean isTransposition(int i, int j, String source, String target) {
     return i > 2
         && j > 2
-        && a.charAt(i - 2) == a.charAt(i - 1)
-        && b.charAt(j - 2) == b.charAt(j - 1);
+        && source.charAt(j - 2) == target.charAt(i - 1)
+        && target.charAt(i - 2) == source.charAt(j - 1);
   }
 
   private double getReplaceCost(char aI, char bJ, boolean useCharDistance) {
