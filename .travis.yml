@@ -1,4 +1,3 @@
-
 language: java
 jdk:
 - openjdk8
@@ -6,23 +5,19 @@ branches:
   only:
   - develop
   - master
-
 addons:
   sonarcloud:
-    organization: "sonarcloud"
+    organization: sonarcloud
     token:
-      secure: "ASXWKuOdMi0AqVIS4iW3xvik39qs2S4CTb6H4cuCSvL09kqwxqGRWrk7ZvK2F4cpqUL+aaLO6pIdIZvbM3CXwSdqbNoADv2Qyui0VKTKBZ9rvG2c/ouNnrPKkvyydVA4VcfKiJnnU9h6kH072XQfQg5oWdjFFPX9iyxT9Mpo+FPfjmoEEBt9j6/5BSZvusBOwkcRKwRBLGV2emR2dKSt/zv/fFThxbXXo7pikVfISJmp9leYqOFuYj32WVmiwJycj0n2m1+Ks44Unq4nolEqWDngDKottOCN2PNMf6Av3jMULbUfRkIMT3n1/J14lsRWbp694E4p0wEXZmCM9f6GkZZoOCNtyeyGu9kK9hRZK9UqjckJAA4aggfiUK2BZK2iWMMK67Wgrvtjf+IqBjFy6Lfgra3d6C29OOxU0nu9nSYo50prgeGkl9KfkCqqr0UioNFNJLwqFcQS2cPNkCvc7oJrOkhxmkxAfDsYexsQhS7VQnsd+PHuxU1o2mtwIe0nadVio2T3ooBiulDzL6XTcmFYWrsCCNkNfbaq5JNTJcTanA7OonSUO6dFK+8eMunNpAc2H4WYlHW5T/BgfvtBAaihdiR6YEKEhCnEe25AmZBryMTc5gTPxPj9up+WevyD8Kj4y9xXyD0py4CyFkUxakVMd0U9jncdKWRwUQ1F3mU="
-
+      secure: ASXWKuOdMi0AqVIS4iW3xvik39qs2S4CTb6H4cuCSvL09kqwxqGRWrk7ZvK2F4cpqUL+aaLO6pIdIZvbM3CXwSdqbNoADv2Qyui0VKTKBZ9rvG2c/ouNnrPKkvyydVA4VcfKiJnnU9h6kH072XQfQg5oWdjFFPX9iyxT9Mpo+FPfjmoEEBt9j6/5BSZvusBOwkcRKwRBLGV2emR2dKSt/zv/fFThxbXXo7pikVfISJmp9leYqOFuYj32WVmiwJycj0n2m1+Ks44Unq4nolEqWDngDKottOCN2PNMf6Av3jMULbUfRkIMT3n1/J14lsRWbp694E4p0wEXZmCM9f6GkZZoOCNtyeyGu9kK9hRZK9UqjckJAA4aggfiUK2BZK2iWMMK67Wgrvtjf+IqBjFy6Lfgra3d6C29OOxU0nu9nSYo50prgeGkl9KfkCqqr0UioNFNJLwqFcQS2cPNkCvc7oJrOkhxmkxAfDsYexsQhS7VQnsd+PHuxU1o2mtwIe0nadVio2T3ooBiulDzL6XTcmFYWrsCCNkNfbaq5JNTJcTanA7OonSUO6dFK+8eMunNpAc2H4WYlHW5T/BgfvtBAaihdiR6YEKEhCnEe25AmZBryMTc5gTPxPj9up+WevyD8Kj4y9xXyD0py4CyFkUxakVMd0U9jncdKWRwUQ1F3mU=
 cache:
   directories:
-  - ~/.m2/repository
-  - ~/.sonar/cache
-
+  - "~/.m2/repository"
+  - "~/.sonar/cache"
 jobs:
   include:
   - stage: build_master
     if: branch = master AND type = push
-
     before_install:
     - echo "Build Started for Master"
     - export GPG_TTY=$(tty)
@@ -33,31 +28,29 @@ jobs:
     - sed -e "s/^\\(127\\.0\\.0\\.1.*\\)/\\1 $(hostname | cut -c1-63)/" /etc/hosts | sudo
       tee /etc/hosts
     - cat /etc/hosts
-    - mvn help:evaluate -N -Dexpression=project.version|grep -v '\[' |  cut -d'-' -f 1  |cut -d'.' -f1-2
-    - export project_version=$(mvn help:evaluate -N -Dexpression=project.version|grep -v '\[' | cut -d'-' -f 1 | cut -d'.' -f1-2)
+    - mvn help:evaluate -N -Dexpression=project.version|grep -v '\[' |  cut -d'-'
+      -f 1  |cut -d'.' -f1-2
+    - export project_version=$(mvn help:evaluate -N -Dexpression=project.version|grep
+      -v '\[' | cut -d'-' -f 1 | cut -d'.' -f1-2)
     - git config --local user.name "travis-ci"
     - git config --local user.email "build@travis.ci"
-    - export TRAVIS_JOB_NUMBER1=${TRAVIS_JOB_NUMBER:-$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)}
+    - export TRAVIS_JOB_NUMBER1=${TRAVIS_JOB_NUMBER:-$(date +'%Y%m%d%H%M%S')-$(git
+      log --format=%h -1)}
     - TRAVIS_JOB_NUMBER1=$(echo $TRAVIS_JOB_NUMBER1 | cut -d'.' -f1)
     - export NEW_VERSION=$project_version.$TRAVIS_JOB_NUMBER1
     - mvn versions:set -DnewVersion=$NEW_VERSION
-
     install:
     - mvn --settings .maven.xml install -Dgpg.skip  -B -V
-
     script:
     - mvn clean deploy --settings .maven.xml -DskipTests=true -B -U -Prelease
-
     after_success:
     - mvn coveralls:report
-
     before_deploy:
     - git tag $NEW_VERSION
-
     deploy:
       provider: releases
       api_key:
-        secure: vaz/OrLwayipY8axrE0lVexyV0MIowN4wggkAwZPn3t77g3uGB7hD3drPklkptLdIeXRTKpFu8Cduz4n/v5a5JnhhsR3cDmQatGa4/3NzpJNjUEs3NEcFww7KEFMqsuiTh+3cazWT02b9wmwyaJ6tGW2VXI+r8S6qeQVbguEHH4SKoptU6Nf/ONUMIkCGgCnWji9WlnvgMsxUXA2Q9c31MUq5Pi/BVLEWAm+SVMU1AJRDQIXd+qJduo0vEVH7vaHFgS3jO78PyISzZdKaKw9aQGutFuiEp3TzkD9KcmS6J13Akk23ZwCE7U/U3wLnvDBDn26QUYmJPMRZcH+MmXeCL4w9D5s/Rt7ifFcosh0Xg08JSsmgsB0F9Tjpn4oeWip9u2c7bf3fIm4rHf1g0NjPsUJD9OX2aQ9MyR+Woyv8f0o/FSRQd8iAVwX/6BmaSG86R9TzQIz+6K0z+JvAfRXmYotU/XBtr9k0OiDJN+zxEAuSBp78GKtFxyzpulxs6cRf4bOnzKx7pOMHFeLFMbdYkOoebQd4g2u3BT+CLyCjcfxNbyLwYazlt+swd9MawddojA2JTK9NRjosYrZ/OxnggOExH9P+GESM3ivUFhT+g2AavkliWU8zeF8Sx5+emPM+Jxawi8v9rRIeicY7KTHLRaBHpq0C6J1zmQp1bkPAHg=
+        secure: CTIvEHKyxk8PW3O6AbJCANQwqb5sE9ZLmPg0Fq9TvGI++WgA2uOLWY3GY7ZcUeXWj3/IdUu34NIqy7Q0tn1zGIY6/6Ih/+79NBUWjTl25Bqv4ZGYSVis9JCjkfP0ua4raIfFojctB/SqxUiuiVUlyJZfUcs4m7O2EWP+7iifF3AzAgxs9TeuyxGyAx4f1esqQjsvd32v24wB+CiXq9V5KG8ca8PzijhYwfrfVo45DLIyMQk6DC9RzYKYuIOQ7Jmd1Mh+Uk3wHlrf8h6DxLBymCmwSCuDlJdhXovExwUdNQaRzkNISInoZDCfth00qIHaMnowLclaZTNKEEqIM030CA0NPHjW4FNmcYtOH5U93bG7bD2UPBu6aAVDtxEeCCjmeM3jQnh8AH16I29kRVJmNP55hdp0MeuU9T9o3csM4Q1rwe/+GDkOFFnBK962T4nR1pFRmMs7jfhE/VP+FlcJsGN8mAINol/GYFxUXN4ggIAVUxEGHSLbh3qZCtKLsNo0IY6UYflstbpID7ZUUycy0s86kpto1KQ1fO/sat9FT7F7wMtcxsjHM1l7zqgXZjrKj/1mMoNAjZ9rmd1aVFblz9Njyxke/OQDwRciPbjsw/g7UOE6yLe3MjJdHj7tbdBXEC8TkGSfBLcaDJzaLaut+jhE9ADLbnqplWrbj+xDhzw=
       file:
       - symspell-lib/target/symspell-lib-$NEW_VERSION.jar
       on:
@@ -84,7 +77,6 @@ jobs:
     - mvn --settings .maven.xml install -Dgpg.skip  -B -V
     script:
     - mvn cobertura:cobertura
-
     after_success:
     - bash <(curl -s https://codecov.io/bash)
   - stage: build_pr
@@ -101,6 +93,3 @@ jobs:
     - cat /etc/hosts
     install:
     - mvn --settings .maven.xml install -Dgpg.skip  -B -V
-
-
-
