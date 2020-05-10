@@ -23,8 +23,9 @@
   * added keyboard-distance to get a dynamic replacement weight (since letters close to each other are more likely to be replaced)
   * do some query normalization before search
   
-## Keyboard based  Qwerty Distance
+## Keyboard based  Qwerty/Qwertz Distance
 
+There are 2 implementations of the keyboards one is English Qwerty based and other is German Qwertz based implementation
 we used the adjancey graph of the keyboard for the weights to the connected nodes.
 <img src="qwerty.png" align="center">
 
