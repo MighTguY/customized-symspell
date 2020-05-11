@@ -13,4 +13,5 @@ public final class Constants {
   public static final String SPELLCHECK_THRESHOLD = SPELLCHECK_PREFIX + "threshold";
   public static final String SPELLCHECK_ENABLE = SPELLCHECK_PREFIX + "enable";
   public static final String SPELLCHECK_BUILD = SPELLCHECK_PREFIX + "build";
+  public static final String SPELLCHECK_SOW = SPELLCHECK_PREFIX + "sow";
 }

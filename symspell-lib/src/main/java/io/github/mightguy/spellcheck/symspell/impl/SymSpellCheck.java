@@ -48,7 +48,8 @@ public class SymSpellCheck extends SpellChecker {
    * the input string.
    */
   @Override
-  public List<SuggestionItem> lookupCompound(String phrase, double maxEditDistance)
+  public List<SuggestionItem> lookupCompound(String phrase, double maxEditDistance,
+      boolean tokenizeOnWhiteSpace)
       throws SpellCheckException {
 
     if (maxEditDistance > spellCheckSettings.getMaxEditDistance()) {
@@ -63,7 +64,12 @@ public class SymSpellCheck extends SpellChecker {
     if (spellCheckSettings.isLowerCaseTerms()) {
       phrase = phrase.toLowerCase();
     }
-    String[] items = SpellHelper.tokenizeOnWhiteSpace(phrase);
+    String[] items;
+    if (tokenizeOnWhiteSpace) {
+      items = SpellHelper.tokenizeOnWhiteSpace(phrase);
+    } else {
+      items = new String[]{phrase};
+    }
     List<SuggestionItem> suggestions = new ArrayList<>();
     List<SuggestionItem> suggestionParts = new ArrayList<>();
     boolean isLastCombi = false;

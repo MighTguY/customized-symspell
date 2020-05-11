@@ -40,8 +40,15 @@ public abstract class SpellChecker {
     return lookupCompound(word, spellCheckSettings.getMaxEditDistance());
   }
 
-  public abstract List<SuggestionItem> lookupCompound(String word, double editDistance)
+
+  public abstract List<SuggestionItem> lookupCompound(String word, double editDistance,
+      boolean tokenizeOnWhiteSpace)
       throws SpellCheckException;
+
+  public List<SuggestionItem> lookupCompound(String word, double editDistance)
+      throws SpellCheckException {
+    return lookupCompound(word, spellCheckSettings.getMaxEditDistance(), true);
+  }
 
 
   public Composition wordBreakSegmentation(String phrase) throws SpellCheckException {

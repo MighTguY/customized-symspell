@@ -82,8 +82,14 @@ public class SpellcheckComponent extends SearchComponent implements SolrCoreAwar
     }
     SolrParams params = rb.req.getParams();
     String q = params.get(Constants.SPELLCHECK_Q, params.get(CommonParams.Q));
+    boolean sow = params.getBool(Constants.SPELLCHECK_SOW, true);
+    List<SuggestionItem> suggestions;
     try {
-      List<SuggestionItem> suggestions = spellChecker.lookupCompound(q);
+      if (sow) {
+        suggestions = spellChecker.lookupCompound(q);
+      } else {
+        suggestions = spellChecker.lookupCompound(q, 2, false);
+      }
       if (!CollectionUtils.isEmpty(suggestions)) {
         addToResponse(rb, suggestions);
       }
@@ -183,6 +189,10 @@ public class SpellcheckComponent extends SearchComponent implements SolrCoreAwar
             SearchRequestUtil
                 .getFromNamedList(spellcheckerNL, "verbosity", Verbosity.ALL.name())))
         .countThreshold(SearchRequestUtil.getFromNamedList(spellcheckerNL, "countThreshold", 10))
+        .doKeySplit(
+            SearchRequestUtil.getFromNamedList(spellcheckerNL, "createBigram", true))
+        .keySplitRegex(
+            SearchRequestUtil.getFromNamedList(spellcheckerNL, "bigramSplitRegex", "\\s+"))
         .build();
 
     StringDistance stringDistance = getStringDistance(spellcheckerNL, spellCheckSettings, core);

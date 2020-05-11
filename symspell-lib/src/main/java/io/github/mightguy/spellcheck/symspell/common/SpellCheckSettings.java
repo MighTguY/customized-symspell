@@ -102,4 +102,10 @@ public class SpellCheckSettings {
   @Builder.Default
   private double editFactor = 0.3;
 
+  @Builder.Default
+  private boolean doKeySplit = true;
+
+  @Builder.Default
+  private String keySplitRegex = "\\s+";
+
 }

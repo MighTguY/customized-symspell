@@ -131,7 +131,8 @@ public class InMemoryDataHolder implements DataHolder {
 
 
   private boolean addToDictionary(String key, double frequency) {
-    if (key.split("\\s+").length > 1) {
+    if (spellCheckSettings.isDoKeySplit()
+        && key.split(spellCheckSettings.getKeySplitRegex()).length > 1) {
       bigramsDictionary.put(key, frequency);
       if (frequency < spellCheckSettings.getBigramCountMin()) {
         spellCheckSettings.setBigramCountMin(frequency);
