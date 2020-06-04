@@ -42,7 +42,7 @@ public class SymSpellCheck extends SpellChecker {
    * independent input terms with/without spelling errors Find suggested spellings for a multi-word
    * input string (supports word splitting/merging).
    *
-   * @param phrase The string being spell checked.
+   * @param phrase          The string being spell checked.
    * @param maxEditDistance The maximum edit distance between input and suggested words.
    * @return A list of {@link SuggestionItem} object representing suggested correct spellings for
    * the input string.
@@ -113,6 +113,7 @@ public class SymSpellCheck extends SpellChecker {
       joinedTerm = joinedTerm.concat(si.getTerm()).concat(" ");
       joinedCount = Math.min(joinedCount, si.getCount());
     }
+    joinedTerm = joinedTerm.trim();
     double dist = stringDistance.getDistance(
         joinedTerm.trim(), phrase, Math.pow(2, 31) - 1);
 
@@ -124,10 +125,10 @@ public class SymSpellCheck extends SpellChecker {
    * supports compound aware automatic spelling correction of multi-word input strings with
    * mistakenly omitted space between two correct words led to one incorrect combined term
    *
-   * @param token The string being spell checked.
-   * @param previousToken The string previousToken being spell checked.
+   * @param token           The string being spell checked.
+   * @param previousToken   The string previousToken being spell checked.
    * @param maxEditDistance The maximum edit distance between input and suggested words.
-   * @param suggestions Suggestions items List
+   * @param suggestions     Suggestions items List
    * @param suggestionParts Partial suggestions list.
    */
   private boolean lookupCombineWords(String token, String previousToken,
@@ -165,7 +166,7 @@ public class SymSpellCheck extends SpellChecker {
    * supports compound aware automatic spelling correction of multi-word input strings with
    * mistakenly inserted space into a correct word led to two incorrect terms
    *
-   * @param suggestions Suggestions items List
+   * @param suggestions     Suggestions items List
    * @param maxEditDistance The maximum edit distance between input and suggested words.
    * @param suggestionParts Partial suggestions list.
    */
@@ -261,8 +262,9 @@ public class SymSpellCheck extends SpellChecker {
   }
 
   /**
-   * @param phrase The word being spell checked.
-   * @param verbosity The value controlling the quantity/closeness of the returned suggestions
+   * @param phrase          The word being spell checked.
+   * @param verbosity       The value controlling the quantity/closeness of the returned
+   *                        suggestions
    * @param maxEditDistance The maximum edit distance between phrase and suggested words.
    * @return List of {@link SuggestionItem}
    */
@@ -543,17 +545,17 @@ public class SymSpellCheck extends SpellChecker {
    * word_segmentation` divides a string into words by inserting missing spaces at the appropriate
    * positions misspelled words are corrected and do not affect segmentation existing spaces are
    * allowed and considered for optimum segmentation
-   *
+   * <p>
    * `word_segmentation` uses a novel approach *without* recursion. https://medium.com/@wolfgarbe/fast-word-segmentation-for-noisy-text-2c2c41f9e8da
    * While each string of length n can be segmented in 2^n−1 possible compositions
    * https://en.wikipedia.org/wiki/Composition_(combinatorics) `word_segmentation` has a linear
    * runtime O(n) to find the optimum composition
-   *
+   * <p>
    * Find suggested spellings for a multi-word input string (supports word splitting/merging).
    *
-   * @param phrase The string being spell checked.
+   * @param phrase                    The string being spell checked.
    * @param maxSegmentationWordLength The maximum word length
-   * @param maxEditDistance The maximum edit distance
+   * @param maxEditDistance           The maximum edit distance
    * @return The word segmented string
    */
   public Composition wordBreakSegmentation(String phrase, int maxSegmentationWordLength,
