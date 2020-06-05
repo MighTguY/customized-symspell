@@ -115,7 +115,7 @@ public class SymSpellCheck extends SpellChecker {
     }
     joinedTerm = joinedTerm.trim();
     double dist = stringDistance.getDistance(
-        joinedTerm.trim(), phrase, Math.pow(2, 31) - 1);
+        joinedTerm, phrase, Math.pow(2, 31) - 1);
 
     SuggestionItem suggestionItem = new SuggestionItem(joinedTerm, dist, joinedCount);
     return Collections.singletonList(suggestionItem);
@@ -187,7 +187,7 @@ public class SymSpellCheck extends SpellChecker {
 
     for (int j = 1; j < word.length(); j++) {
       String part1 = word.substring(0, j);
-      String part2 = word.substring(j, word.length());
+      String part2 = word.substring(j);
 
       List<SuggestionItem> suggestions1 = lookup(part1, Verbosity.TOP,
           maxEditDistance);
