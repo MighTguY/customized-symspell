@@ -47,7 +47,7 @@ public abstract class SpellChecker {
 
   public List<SuggestionItem> lookupCompound(String word, double editDistance)
       throws SpellCheckException {
-    return lookupCompound(word, spellCheckSettings.getMaxEditDistance(), true);
+    return lookupCompound(word, editDistance, true);
   }
 
 
