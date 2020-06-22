@@ -1,0 +1,6 @@
+spellcheck:
+  deletionWeight: 1.0
+  insertionWeight: 1.0
+  replaceWeight: 1.0
+  transpositionWeight: 1.0
+  charDistance: ""

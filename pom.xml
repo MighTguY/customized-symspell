@@ -10,6 +10,13 @@
   <packaging>pom</packaging>
 
 
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>2.0.6.RELEASE</version>
+    <relativePath/> <!-- lookup parent from repository -->
+  </parent>
+
   <name>${project.artifactId}</name>
   <description>Customized version of Symspell, Java port of the version 6.6</description>
   <url>https://github.com/MighTguY/customized-symspell</url>
@@ -18,6 +25,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <java.version>1.8</java.version>
+    <springboot.version>2.0.6.RELEASE</springboot.version>
     <maven-compiler-plugin.version>3.1</maven-compiler-plugin.version>
     <maven-release-plugin.version>2.5.2</maven-release-plugin.version>
     <maven-checkstyle-plugin.version>3.1.0</maven-checkstyle-plugin.version>
@@ -443,6 +451,7 @@
     <module>symspell-lib</module>
     <module>symspell-console</module>
     <module>symspell-solr</module>
+    <module>symspell-service</module>
   </modules>
 
 </project>
