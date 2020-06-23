@@ -27,7 +27,7 @@ public class QwertyDistance implements CharDistance {
   @Override
   public double distance(char a, char b) {
 
-    if (a > 'z' + 1 || b > 'z' + 1) {
+    if (a > 'z' || b > 'z') {
       return defaultValue;
     }
     return this.operationCost[a][b];
