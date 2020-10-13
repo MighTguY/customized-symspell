@@ -33,7 +33,7 @@
     <checkstyle.location>google_checks.xml</checkstyle.location>
     <checkstyle.exclusions>checkstyle-suppressions.xml</checkstyle.exclusions>
     <failOnStyleViolation>true</failOnStyleViolation>
-    <junit.version>4.12</junit.version>
+    <junit.version>4.13.1</junit.version>
     <apache.lang.version>3.9</apache.lang.version>
     <apache.commons.version>4.1</apache.commons.version>
     <jacoco.version>0.7.8</jacoco.version>
