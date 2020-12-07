@@ -12,7 +12,7 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.0.9.RELEASE</version>
+    <version>2.4.0</version>
   </parent>
 
   <name>${project.artifactId}</name>
@@ -68,8 +68,6 @@
     <jmh.version>1.19</jmh.version>
     <junit.version>4.12</junit.version>
     <murmur.version>1.0.0</murmur.version>
-    <solr.version>7.7.3</solr.version>
-    <springboot.version>2.0.9.RELEASE</springboot.version>
     <springfox-swagger.version>3.0.0</springfox-swagger.version>
   </properties>
 
@@ -106,17 +104,6 @@
         <groupId>org.slf4j</groupId>
         <artifactId>slf4j-api</artifactId>
         <version>1.7.25</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.solr</groupId>
-        <artifactId>solr-core</artifactId>
-        <version>${solr.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.solr</groupId>
-        <artifactId>solr-test-framework</artifactId>
-        <version>${solr.version}</version>
-        <scope>test</scope>
       </dependency>
       <dependency>
         <groupId>org.openjdk.jmh</groupId>
