@@ -13,10 +13,6 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.projectlombok</groupId>
-      <artifactId>lombok</artifactId>
-    </dependency>
-    <dependency>
       <groupId>io.github.mightguy</groupId>
       <artifactId>symspell-lib</artifactId>
       <version>${parent.version}</version>
