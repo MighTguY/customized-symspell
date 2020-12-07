@@ -61,16 +61,7 @@
     <solr.version>7.6.0</solr.version>
     <build-helper.plugin.version>3.0.0</build-helper.plugin.version>
     <jmh.version>1.19</jmh.version>
-
   </properties>
-
-  <dependencies>
-    <dependency>
-      <groupId>org.eluder.coveralls</groupId>
-      <artifactId>coveralls-maven-plugin</artifactId>
-      <version>4.3.0</version>
-    </dependency>
-  </dependencies>
 
   <dependencyManagement>
     <dependencies>
@@ -141,6 +132,15 @@
   </dependencyManagement>
 
   <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.eluder.coveralls</groupId>
+          <artifactId>coveralls-maven-plugin</artifactId>
+          <version>4.3.0</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
