@@ -25,42 +25,49 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <java.version>1.8</java.version>
-    <springboot.version>2.0.6.RELEASE</springboot.version>
-    <maven-compiler-plugin.version>3.1</maven-compiler-plugin.version>
-    <maven-release-plugin.version>2.5.2</maven-release-plugin.version>
-    <maven-checkstyle-plugin.version>3.1.0</maven-checkstyle-plugin.version>
+
+    <skip.unit.tests>false</skip.unit.tests>
+
+    <lombok.version>1.18.2</lombok.version>
+
     <checkstyle.version>8.29</checkstyle.version>
     <checkstyle.location>google_checks.xml</checkstyle.location>
     <checkstyle.exclusions>checkstyle-suppressions.xml</checkstyle.exclusions>
     <failOnStyleViolation>true</failOnStyleViolation>
-    <junit.version>4.12</junit.version>
-    <apache.lang.version>3.9</apache.lang.version>
-    <apache.commons.version>4.1</apache.commons.version>
+
     <jacoco.version>0.7.8</jacoco.version>
     <jacoco.unittests.destFile>${project.build.directory}/coverage-reports/jacoco.exec
     </jacoco.unittests.destFile>
     <jacoco.unittests.reportPath>${project.build.directory}/coverage-reports/unit-tests
     </jacoco.unittests.reportPath>
     <jacoco.unittests.folder.reportPath>/coverage-reports/unit-tests</jacoco.unittests.folder.reportPath>
-    <maven.surefire.plugin.version>2.20.1</maven.surefire.plugin.version>
-    <skip.unit.tests>false</skip.unit.tests>
     <coverage.threshold>0.0</coverage.threshold> <!-- //TODO: update to 75%-->
     <sonar.jacoco.reportPath>${jacoco.unittests.destFile}</sonar.jacoco.reportPath>
     <sonar-jacoco-listeners.version>3.2</sonar-jacoco-listeners.version>
-    <lombok.version>1.18.2</lombok.version>
-    <maven-javadoc-plugin.version>2.10.1</maven-javadoc-plugin.version>
     <sonar.jacoco.reportPaths>${jacoco.unittests.destFile}</sonar.jacoco.reportPaths>
     <sonar-jacoco-listeners.version>3.2</sonar-jacoco-listeners.version>
     <sonar.projectKey>${project.artifactId}</sonar.projectKey>
     <sonar.projectName>${project.artifactId}</sonar.projectName>
-    <sonar-maven-plugin.version>3.5.0.1254</sonar-maven-plugin.version>
     <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
     <sonar.sources>src/main/java</sonar.sources>
     <sonar.binaries>target/classes</sonar.binaries>
     <sonar.tests>src/test/java</sonar.tests>
-    <solr.version>7.6.0</solr.version>
-    <build-helper.plugin.version>3.0.0</build-helper.plugin.version>
+
+    <maven-assembly-plugin.version>3.3.0</maven-assembly-plugin.version>
+    <maven-checkstyle-plugin.version>3.1.1</maven-checkstyle-plugin.version>
+    <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+    <maven-javadoc-plugin.version>3.2.0</maven-javadoc-plugin.version>
+    <maven-release-plugin.version>2.5.3</maven-release-plugin.version>
+    <maven.surefire.plugin.version>2.22.2</maven.surefire.plugin.version>
+    <build-helper.plugin.version>3.2.0</build-helper.plugin.version>
+    <sonar-maven-plugin.version>3.7.0.1746</sonar-maven-plugin.version>
+
+    <apache.commons.version>4.1</apache.commons.version>
+    <apache.lang.version>3.9</apache.lang.version>
     <jmh.version>1.19</jmh.version>
+    <junit.version>4.12</junit.version>
+    <solr.version>7.6.0</solr.version>
+    <springboot.version>2.0.6.RELEASE</springboot.version>
   </properties>
 
   <dependencyManagement>
