@@ -101,13 +101,13 @@
       </dependency>
       <dependency>
         <groupId>org.apache.commons</groupId>
-        <artifactId>commons-lang3</artifactId>
-        <version>${apache.commons-lang3.version}</version>
+        <artifactId>commons-collections4</artifactId>
+        <version>${apache.commons-collections4.version}</version>
       </dependency>
       <dependency>
         <groupId>org.apache.commons</groupId>
-        <artifactId>commons-collections4</artifactId>
-        <version>${apache.commons-collections4.version}</version>
+        <artifactId>commons-lang3</artifactId>
+        <version>${apache.commons-lang3.version}</version>
       </dependency>
       <dependency>
         <groupId>org.slf4j</groupId>
@@ -158,11 +158,6 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.hamcrest</groupId>
-      <artifactId>hamcrest</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>
