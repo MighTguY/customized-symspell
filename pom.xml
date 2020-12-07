@@ -261,7 +261,6 @@
               <dataFile>${jacoco.unittests.destFile}</dataFile>
               <!-- Sets the output directory for the code coverage report. -->
               <outputDirectory>${jacoco.unittests.reportPath}</outputDirectory>
-              <append>true</append>
             </configuration>
           </execution>
         </executions>
@@ -330,12 +329,6 @@
             <configuration>
               <argLine>${surefireArgLine}</argLine>
               <skipTests>${skip.unit.tests}</skipTests>
-              <properties>
-                <property>
-                  <name>listener</name>
-                  <value>org.sonar.java.jacoco.JUnitListener</value>
-                </property>
-              </properties>
               <includes>
                 <include>**/*Test*</include>
               </includes>
