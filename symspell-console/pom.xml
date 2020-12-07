@@ -14,9 +14,9 @@
 
   <dependencies>
     <dependency>
-      <groupId>io.github.mightguy</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>symspell-lib</artifactId>
-      <version>6.6.47</version>
+      <version>${parent.version}</version>
     </dependency>
   </dependencies>
 </project>
