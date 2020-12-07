@@ -66,6 +66,7 @@
     <apache.commons-collections4.version>4.4</apache.commons-collections4.version>
     <apache.commons-csv.version>1.8</apache.commons-csv.version>
     <apache.commons-lang3.version>3.11</apache.commons-lang3.version>
+    <hamcrest.version>2.2</hamcrest.version>
     <jmh.version>1.19</jmh.version>
     <junit.version>4.12</junit.version>
     <solr.version>7.7.3</solr.version>
@@ -84,6 +85,12 @@
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
         <version>${junit.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.hamcrest</groupId>
+        <artifactId>hamcrest</artifactId>
+        <version>${hamcrest.version}</version>
         <scope>test</scope>
       </dependency>
       <dependency>
@@ -151,6 +158,11 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.hamcrest</groupId>
+      <artifactId>hamcrest</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>
