@@ -70,6 +70,7 @@
     <junit.version>4.12</junit.version>
     <solr.version>7.7.3</solr.version>
     <springboot.version>2.0.9.RELEASE</springboot.version>
+    <springfox-swagger.version>3.0.0</springfox-swagger.version>
   </properties>
 
   <dependencyManagement>

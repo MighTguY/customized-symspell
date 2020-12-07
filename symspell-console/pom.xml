@@ -14,7 +14,7 @@
 
   <dependencies>
     <dependency>
-      <groupId>${project.groupId}</groupId>
+      <groupId>${parent.groupId}</groupId>
       <artifactId>symspell-lib</artifactId>
       <version>${parent.version}</version>
     </dependency>
