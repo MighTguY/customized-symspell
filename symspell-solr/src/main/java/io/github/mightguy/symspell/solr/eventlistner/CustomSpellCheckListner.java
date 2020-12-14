@@ -6,11 +6,15 @@ import io.github.mightguy.spellcheck.symspell.common.DictionaryItem;
 import io.github.mightguy.spellcheck.symspell.exception.SpellCheckException;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.lucene.index.DirectoryReader;
+import org.apache.lucene.index.FieldInfo;
+import org.apache.lucene.index.FieldInfos;
 import org.apache.lucene.index.Fields;
 import org.apache.lucene.index.MultiFields;
+import org.apache.lucene.index.Terms;
 import org.apache.lucene.index.TermsEnum;
 import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.CharsRefBuilder;
@@ -81,28 +85,37 @@ public class CustomSpellCheckListner implements SolrEventListener {
   public void reload(SolrIndexSearcher newSearcher, SpellChecker checker)
       throws IOException, SpellCheckException {
 
-    DirectoryReader productsIndexReader = newSearcher.getIndexReader();
-    Fields fields = MultiFields.getFields(productsIndexReader);
-    IndexSchema schema = newSearcher.getCore().getLatestSchema();
     long time = System.currentTimeMillis();
-    for (String field : fields) {
+
+    DirectoryReader productsIndexReader = newSearcher.getIndexReader();
+    IndexSchema schema = newSearcher.getCore().getLatestSchema();
+    CharsRefBuilder charsRefBuilder = new CharsRefBuilder();
+    for (String field : newSearcher.getFieldNames()) {
       if (!fieldArr.contains(field)) {
         continue;
       }
+
       FieldType type = schema.getField(field).getType();
       int insertionsCount = 0;
-      for (TermsEnum iterator = fields.terms(field).iterator(); iterator.next() != null; ) {
-        BytesRef term = iterator.term();
-        CharsRefBuilder charsRefBuilder = new CharsRefBuilder();
-        type.indexedToReadable(term, charsRefBuilder);
-        insertionsCount++;
-        checker.getDataHolder().addItem(
-            new DictionaryItem(charsRefBuilder.toString().trim(), (double) iterator.totalTermFreq(),
-                0.0));
+      for (int docID = 0; docID < productsIndexReader.maxDoc(); docID++) {
+        Terms terms = productsIndexReader.getTermVector(docID, field);
+        if (terms == null) {
+          continue;
+        }
+
+        for (TermsEnum iterator = terms.iterator(); iterator.next() != null; ) {
+          BytesRef term = iterator.term();
+          charsRefBuilder.clear();
+          type.indexedToReadable(term, charsRefBuilder);
+          insertionsCount++;
+          checker.getDataHolder().addItem(new DictionaryItem(
+                  charsRefBuilder.toString().trim(), (double) iterator.totalTermFreq(), 0.0));
+        }
       }
       log.info("Spellcheck Dictionary populated for Field Name {}, Count {}", field,
           insertionsCount);
     }
+
     log.info("Data for SpellChecker  was populated. Time={} ms",
         (System.currentTimeMillis() - time));
   }
