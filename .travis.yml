@@ -49,8 +49,7 @@ jobs:
     - git tag $NEW_VERSION
     deploy:
       provider: releases
-      api_key:
-        secure: CTIvEHKyxk8PW3O6AbJCANQwqb5sE9ZLmPg0Fq9TvGI++WgA2uOLWY3GY7ZcUeXWj3/IdUu34NIqy7Q0tn1zGIY6/6Ih/+79NBUWjTl25Bqv4ZGYSVis9JCjkfP0ua4raIfFojctB/SqxUiuiVUlyJZfUcs4m7O2EWP+7iifF3AzAgxs9TeuyxGyAx4f1esqQjsvd32v24wB+CiXq9V5KG8ca8PzijhYwfrfVo45DLIyMQk6DC9RzYKYuIOQ7Jmd1Mh+Uk3wHlrf8h6DxLBymCmwSCuDlJdhXovExwUdNQaRzkNISInoZDCfth00qIHaMnowLclaZTNKEEqIM030CA0NPHjW4FNmcYtOH5U93bG7bD2UPBu6aAVDtxEeCCjmeM3jQnh8AH16I29kRVJmNP55hdp0MeuU9T9o3csM4Q1rwe/+GDkOFFnBK962T4nR1pFRmMs7jfhE/VP+FlcJsGN8mAINol/GYFxUXN4ggIAVUxEGHSLbh3qZCtKLsNo0IY6UYflstbpID7ZUUycy0s86kpto1KQ1fO/sat9FT7F7wMtcxsjHM1l7zqgXZjrKj/1mMoNAjZ9rmd1aVFblz9Njyxke/OQDwRciPbjsw/g7UOE6yLe3MjJdHj7tbdBXEC8TkGSfBLcaDJzaLaut+jhE9ADLbnqplWrbj+xDhzw=
+      api_key: $GITHUB_TOKEN
       file:
       - symspell-lib/target/symspell-lib-$NEW_VERSION.jar
       on:
