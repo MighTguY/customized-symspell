@@ -572,6 +572,14 @@ public class SymSpellCheck extends SpellChecker {
     if (phrase.isEmpty()) {
       return new Composition();
     }
+
+    // v6.7.0 - Normalize ligatures (ﬁ → fi) and remove hyphens (syllabification artifacts)
+    phrase = java.text.Normalizer.normalize(phrase, java.text.Normalizer.Form.NFKC)
+        .replace("-", "");  // Remove hyphen-minus character (U+002D)
+
+    // v6.7.0 - Preserve original phrase for case detection before lowercasing
+    String originalPhrase = phrase;
+
     if (spellCheckSettings.isLowerCaseTerms()) {
       phrase = phrase.toLowerCase();
     }
@@ -597,6 +605,8 @@ public class SymSpellCheck extends SpellChecker {
       for (int i = 1; i <= imax; i++) {
         //get top spelling correction/ed for part
         String part = phrase.substring(j, j + i);
+        // v6.7.0 - Get original part for case detection
+        String originalPart = originalPhrase.substring(j, j + i);
         int separatorLength = 0;
         int topEd = 0;
         double topProbabilityLog;
@@ -604,6 +614,7 @@ public class SymSpellCheck extends SpellChecker {
         if (Character.isWhitespace(part.charAt(0))) {
           //remove space for levensthein calculation
           part = part.substring(1);
+          originalPart = originalPart.substring(1);
         } else {
           //add ed+1: space did not exist, had to be inserted
           separatorLength = 1;
@@ -614,12 +625,26 @@ public class SymSpellCheck extends SpellChecker {
         //remove space
         part = part
             .replace(" ", "");
+        originalPart = originalPart.replace(" ", "");
         //add number of removed spaces to ed
         topEd -= part.length();
 
-        List<SuggestionItem> results = this.lookup(part, Verbosity.TOP, maxEditDistance);
+        // v6.7.0 - Lookup against lowercase for dictionary matching
+        List<SuggestionItem> results = this.lookup(part.toLowerCase(), Verbosity.TOP,
+            maxEditDistance);
         if (CollectionUtils.isNotEmpty(results)) {
           topResult = results.get(0).getTerm();
+
+          // v6.7.0 - Preserve uppercase on first character from original part
+          // v6.7.2 - Safety check for length > 0
+          if (originalPart.length() > 0 && Character.isUpperCase(originalPart.charAt(0))) {
+            char[] resultChars = topResult.toCharArray();
+            if (resultChars.length > 0) {
+              resultChars[0] = Character.toUpperCase(resultChars[0]);
+              topResult = new String(resultChars);
+            }
+          }
+
           topEd += results.get(0).getDistance();
           //Naive Bayes Rule
           //we assume the word probabilities of two words to be independent
@@ -660,10 +685,27 @@ public class SymSpellCheck extends SpellChecker {
             //replace values if smaller edit distance
             || (compositions[circularIndex].getDistanceSum() + separatorLength + topEd
             < compositions[destinationIndex].getDistanceSum())) {
-          compositions[destinationIndex].setSegmentedString(
-              compositions[circularIndex].getSegmentedString() + " " + part);
-          compositions[destinationIndex].setCorrectedString(
-              compositions[circularIndex].getCorrectedString() + " " + topResult);
+
+          // v6.7.0 - Keep punctuation or apostrophe adjacent to previous word (no space)
+          boolean isPunctuation = (topResult.length() == 1
+              && Character.getType(topResult.charAt(0)) >= Character.DASH_PUNCTUATION
+              && Character.getType(topResult.charAt(0)) <= Character.OTHER_PUNCTUATION);
+          boolean isApostrophe = (topResult.length() == 2 && topResult.startsWith("'"));
+
+          if (isPunctuation || isApostrophe) {
+            // No space before punctuation/apostrophe
+            compositions[destinationIndex].setSegmentedString(
+                compositions[circularIndex].getSegmentedString() + part);
+            compositions[destinationIndex].setCorrectedString(
+                compositions[circularIndex].getCorrectedString() + topResult);
+          } else {
+            // Normal case: add space
+            compositions[destinationIndex].setSegmentedString(
+                compositions[circularIndex].getSegmentedString() + " " + part);
+            compositions[destinationIndex].setCorrectedString(
+                compositions[circularIndex].getCorrectedString() + " " + topResult);
+          }
+
           compositions[destinationIndex].setDistanceSum(
               compositions[circularIndex].getDistanceSum() + topEd);
           compositions[destinationIndex].setLogProbSum(

@@ -6,7 +6,7 @@
 
   <groupId>io.github.mightguy</groupId>
   <artifactId>symspell</artifactId>
-  <version>6.6-SNAPSHOT</version>
+  <version>6.7-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <parent>
@@ -16,7 +16,7 @@
   </parent>
 
   <name>${project.artifactId}</name>
-  <description>Customized version of Symspell, Java port of the version 6.6</description>
+  <description>Customized version of Symspell, Java port of version 6.7 with advanced features</description>
   <url>https://github.com/MighTguY/customized-symspell</url>
 
   <properties>
