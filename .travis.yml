@@ -27,8 +27,8 @@ jobs:
     before_install:
     - echo "Build Started for Master"
     - export GPG_TTY=$(tty)
-    - echo $GPG_SECRET_KEYS | base64 --decode | $GPG_EXECUTABLE --import
-    - echo $GPG_OWNERTRUST | base64 --decode | $GPG_EXECUTABLE --import-ownertrust
+    - echo $GPG_SECRET_KEYS | base64 --decode | gpg --batch --import
+    - echo $GPG_OWNERTRUST | base64 --decode | gpg --import-ownertrust
     - cat /etc/hosts
     - sudo hostname "$(hostname | cut -c1-63)"
     - sed -e "s/^\\(127\\.0\\.0\\.1.*\\)/\\1 $(hostname | cut -c1-63)/" /etc/hosts | sudo
@@ -48,7 +48,7 @@ jobs:
     install:
     - mvn --settings .maven.xml install -Dgpg.skip  -B -V
     script:
-    - mvn clean deploy --settings .maven.xml -DskipTests=true -B -U -Prelease
+    - mvn clean deploy --settings .maven.xml -DskipTests=true -B -U -Prelease -Dgpg.passphrase="$GPG_PASSPHRASE" -Dgpg.arguments="--pinentry-mode=loopback"
     after_success:
     - mvn coveralls:report
     before_deploy:
@@ -71,8 +71,8 @@ jobs:
     before_install:
     - echo "Build Started for Develop"
     - export GPG_TTY=$(tty)
-    - echo $GPG_SECRET_KEYS | base64 --decode | $GPG_EXECUTABLE --import
-    - echo $GPG_OWNERTRUST | base64 --decode | $GPG_EXECUTABLE --import-ownertrust
+    - echo $GPG_SECRET_KEYS | base64 --decode | gpg --batch --import
+    - echo $GPG_OWNERTRUST | base64 --decode | gpg --import-ownertrust
     - cat /etc/hosts
     - sudo hostname "$(hostname | cut -c1-63)"
     - sed -e "s/^\\(127\\.0\\.0\\.1.*\\)/\\1 $(hostname | cut -c1-63)/" /etc/hosts | sudo
@@ -89,8 +89,8 @@ jobs:
     before_install:
     - echo "Build Started for PR $TRAVIS_PULL_REQUEST"
     - export GPG_TTY=$(tty)
-    - echo $GPG_SECRET_KEYS | base64 --decode | $GPG_EXECUTABLE --import
-    - echo $GPG_OWNERTRUST | base64 --decode | $GPG_EXECUTABLE --import-ownertrust
+    - echo $GPG_SECRET_KEYS | base64 --decode | gpg --batch --import
+    - echo $GPG_OWNERTRUST | base64 --decode | gpg --import-ownertrust
     - cat /etc/hosts
     - sudo hostname "$(hostname | cut -c1-63)"
     - sed -e "s/^\\(127\\.0\\.0\\.1.*\\)/\\1 $(hostname | cut -c1-63)/" /etc/hosts | sudo
