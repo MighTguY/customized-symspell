@@ -4,8 +4,66 @@
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.mightguy/symspell-lib.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.mightguy%22%20AND%20a:%22symspell-lib%22)
 [![javadoc.io](https://javadoc.io/badge2/io.github.mightguy/symspell-lib/javadoc.io.svg)](https://javadoc.io/doc/io.github.mightguy/symspell-lib)
 
-# Customized SymSpell SpellCheck Java 
-**This customized spell check is is based on the spell correction fuzzy search library [SymSpell](https://github.com/wolfgarbe/symspell) with a few customizations and optimizations**  
+# Customized SymSpell SpellCheck Java
+
+**Fast, accurate spell checking library for Java - ported from C# SymSpell v6.7 with powerful custom features**
+
+This customized spell check is based on the spell correction fuzzy search library [SymSpell](https://github.com/wolfgarbe/symspell) with advanced customizations and optimizations.
+
+## Quick Start
+
+### Maven Dependency
+
+```xml
+<dependency>
+    <groupId>io.github.mightguy</groupId>
+    <artifactId>symspell-lib</artifactId>
+    <version>6.7-SNAPSHOT</version>
+</dependency>
+```
+
+### Basic Usage
+
+```java
+// Initialize
+SpellCheckSettings settings = SpellCheckSettings.builder()
+    .maxEditDistance(2)
+    .prefixLength(7)
+    .build();
+
+SymSpellCheck spellChecker = new SymSpellCheck(dataHolder, distance, settings);
+
+// Load dictionary
+dataHolder.addItem(new DictionaryItem("word", frequency, -1.0));
+
+// Spell check
+List<SuggestionItem> suggestions = spellChecker.lookup("wrod", Verbosity.TOP, 2);
+// Returns: ["word"]
+
+// Word segmentation
+Composition result = spellChecker.wordBreakSegmentation("thequickbrownfox", 10, 2.0);
+// Returns: "the quick brown fox"
+```
+
+## What's New in v6.7 ✨
+
+Ported upstream SymSpell v6.7 algorithmic improvements while preserving all custom features.
+
+**Key Improvements:**
+- **Ligature normalization** - Automatic conversion of Unicode ligatures (ﬁ → fi) using NFKC
+- **Case preservation** - Maintains uppercase on first character during word segmentation
+- **Hyphen removal** - Better handling of hyphenated words and syllabification
+- **Punctuation adjacency** - Punctuation stays adjacent to words (no extra spaces)
+- **Safety enhancements** - Edge case protections in character operations
+
+**Custom Features (All Preserved):**
+- Exclusion Dictionary - Whitelist terms that bypass spell checking
+- Edit Factor Configuration - Dynamic edit distance based on word length
+- Ignore Unknown Words - Option to skip unknown terms
+- Bigram Key Splitting - Configurable phrase-level corrections
+- QwertzDistance - German keyboard layout support
+
+📖 **[See detailed release notes](ReleaseNotes.md)**
 
 ## Java Ported v6.6 (Bigrams)
 * the optional bigram dictionary in order to use sentence level context information for selecting best spelling correction.
