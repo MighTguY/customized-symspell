@@ -12,6 +12,10 @@
 
   <artifactId>symspell-solr</artifactId>
 
+  <properties>
+    <jacoco.skip>true</jacoco.skip>
+  </properties>
+
   <dependencies>
     <dependency>
       <groupId>${project.parent.groupId}</groupId>

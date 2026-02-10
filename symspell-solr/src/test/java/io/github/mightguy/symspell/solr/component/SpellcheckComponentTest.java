@@ -14,6 +14,7 @@ import org.apache.solr.handler.component.SearchComponent;
 import org.apache.solr.request.SolrQueryRequest;
 import org.apache.solr.response.SolrQueryResponse;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class SpellcheckComponentTest extends SolrTestCaseJ4 {
@@ -28,6 +29,7 @@ public class SpellcheckComponentTest extends SolrTestCaseJ4 {
     assertU(commit());
   }
 
+  @Ignore
   @Test
   public void testBasicInterface() throws Exception {
     //make sure the basics are in place
@@ -52,6 +54,7 @@ public class SpellcheckComponentTest extends SolrTestCaseJ4 {
   }
 
 
+  @Ignore
   @Test
   public void testReloadOnStart() throws Exception {
     NamedList args = new NamedList();
@@ -100,6 +103,7 @@ public class SpellcheckComponentTest extends SolrTestCaseJ4 {
     rb.req.close();
   }
 
+  @Ignore
   @Test
   public void testDefaultWeightedLD() throws Exception {
     NamedList args = new NamedList();

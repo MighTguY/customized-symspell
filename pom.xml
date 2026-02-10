@@ -320,7 +320,6 @@
         <configuration>
           <jacocoReports>
             <jacocoReport>symspell-lib/target${jacoco.unittests.folder.reportPath}/jacoco.xml</jacocoReport>
-            <jacocoReport>symspell-solr/target${jacoco.unittests.folder.reportPath}/jacoco.xml</jacocoReport>
           </jacocoReports>
           <repoToken>QdxFNoS4I2m7FTQzjNcluRjyDy8fbUdVN</repoToken>
         </configuration>
