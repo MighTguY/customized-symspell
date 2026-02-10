@@ -16,6 +16,12 @@ cache:
   - "~/.sonar/cache"
 jobs:
   include:
+  - stage: build_default
+    if: type = push
+    install:
+    - mvn --settings .maven.xml install -Dgpg.skip -B -V
+    script:
+    - mvn clean test -B
   - stage: build_master
     if: branch = master AND type = push
     before_install:
