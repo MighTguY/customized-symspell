@@ -21,11 +21,10 @@ public final class SpellHelper {
     if (key.length() <= maxEditDistance) {
       deletedWords.add("");
     }
-    if (key.length() > maxEditDistance) {
-      deletedWords
-          .add(key.substring(0,
-              prefixLength < key.length() ? prefixLength : key.length()));
+    if (key.length() > prefixLength) {
+      key = key.substring(0, prefixLength);
     }
+    deletedWords.add(key);
     return edits(key, 0, deletedWords, getEdistance(maxEditDistance, key.length(), editFactor));
   }
 
