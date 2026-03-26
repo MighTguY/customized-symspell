@@ -68,7 +68,7 @@
     <jmh.version>1.19</jmh.version>
     <junit.version>4.12</junit.version>
     <murmur.version>1.0.0</murmur.version>
-    <solr.version>8.7.0</solr.version>
+    <solr.version>9.10.1</solr.version>
     <springfox-swagger.version>3.0.0</springfox-swagger.version>
   </properties>
 
