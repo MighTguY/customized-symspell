@@ -63,7 +63,7 @@
 
     <apache.commons-collections4.version>4.4</apache.commons-collections4.version>
     <apache.commons-csv.version>1.8</apache.commons-csv.version>
-    <apache.commons-lang3.version>3.11</apache.commons-lang3.version>
+    <apache.commons-lang3.version>3.18.0</apache.commons-lang3.version>
     <hamcrest.version>2.2</hamcrest.version>
     <jmh.version>1.19</jmh.version>
     <junit.version>4.12</junit.version>
